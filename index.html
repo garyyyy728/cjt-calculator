@@ -1084,6 +1084,35 @@
             box-shadow: none;
         }
         
+        .save-friends-btn, .load-friends-btn {
+            background: transparent;
+            border: 1px solid;
+            box-shadow: none;
+            padding: 5px 10px;
+            font-size: 13px;
+            min-width: auto;
+        }
+        
+        .save-friends-btn {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+        
+        .save-friends-btn:hover {
+            background: rgba(39, 174, 96, 0.1);
+            box-shadow: none;
+        }
+        
+        .load-friends-btn {
+            border-color: #e67e22;
+            color: #e67e22;
+        }
+        
+        .load-friends-btn:hover {
+            background: rgba(230, 126, 34, 0.1);
+            box-shadow: none;
+        }
+        
         /* 常用飯友管理對話框 */
         .friends-dialog {
             position: fixed;
@@ -1308,6 +1337,8 @@
                         <h3><i class="fas fa-users"></i> 常用飯友</h3>
                         <div class="frequent-friends-controls">
                             <button class="manage-friends-btn" id="manageFriendsBtn"><i class="fas fa-cog"></i> 管理飯友</button>
+                            <button class="save-friends-btn" id="saveFriendsBtn"><i class="fas fa-save"></i> 保存飯友</button>
+                            <button class="load-friends-btn" id="loadFriendsBtn"><i class="fas fa-upload"></i> 加載飯友</button>
                         </div>
                     </div>
                     <div class="friend-chips friend-chips-1" id="friendChips">
@@ -1329,10 +1360,10 @@
                                     <th width="10%">飯友</th>
                                     <th class="yellow-bg" width="8%">毛付</th>
                                     <th class="yellow-bg" width="8%">外賣盒</th>
-                                    <th class="yellow-bg" width="8%">配送費</th>
+                                    <th class="light-blue-bg" width="8%">配送費</th>
                                     <th class="light-blue-bg" width="8%">商家優惠</th>
-                                    <th class="light-blue-bg" width="8%">獨享優惠</th>
                                     <th class="light-blue-bg" width="8%">膠袋費</th>
+                                    <th class="green-bg" width="8%">獨享優惠</th>
                                     <th class="orange-bg" width="8%">比例</th>
                                     <th width="8%">淨付</th>
                                     <th width="5%">操作</th>
@@ -1345,10 +1376,10 @@
                                     <td><input type="text" class="person-name" value="" placeholder="姓名"></td>
                                     <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0" placeholder="餐費"></td>
                                     <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0" placeholder="盒費"></td>
-                                    <td class="yellow-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
+                                    <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
-                                    <td class="light-blue-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
+                                    <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                                     <td class="orange-bg percentage">0%</td>
                                     <td class="net-pay">0.00</td>
                                     <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
@@ -1359,10 +1390,10 @@
                                     <td colspan="2">總計</td>
                                     <td class="yellow-bg total-gross">0.00</td>
                                     <td class="yellow-bg total-box">0.00</td>
-                                    <td class="yellow-bg total-delivery">0.00</td>
+                                    <td class="light-blue-bg total-delivery">0.00</td>
                                     <td class="light-blue-bg red-text total-discount">0.00</td>
-                                    <td class="light-blue-bg red-text total-personal-discount">0.00</td>
                                     <td class="light-blue-bg total-bag">0.00</td>
+                                    <td class="green-bg red-text total-personal-discount">0.00</td>
                                     <td class="orange-bg total-percentage">0%</td>
                                     <td class="total-net">0.00</td>
                                     <td></td>
@@ -1426,12 +1457,12 @@
                             <th rowspan="2" class="grand-total-column" width="8%">合計</th>
                         </tr>
                         <tr>
-                            <th class="yellow-bg" width="8%">餐費</th>
+                            <th class="yellow-bg" width="8%">毛付</th>
                             <th class="yellow-bg" width="8%">外賣盒</th>
-                            <th class="yellow-bg" width="8%">配送費</th>
+                            <th class="light-blue-bg" width="8%">配送費</th>
                             <th class="light-blue-bg" width="8%">商家優惠</th>
-                            <th class="light-blue-bg" width="8%">獨享優惠</th>
                             <th class="light-blue-bg" width="8%">膠袋費</th>
+                            <th class="green-bg" width="8%">獨享優惠</th>
                             <th class="orange-bg" width="8%">比例</th>
                             <th width="8%">淨付</th>
                         </tr>
@@ -1442,13 +1473,13 @@
                     <tfoot>
                         <tr class="total-row">
                             <td colspan="2">總計</td>
-                            <td id="finalTotalGross">0.00</td>
-                            <td id="finalTotalBox">0.00</td>
-                            <td id="finalTotalDelivery">0.00</td>
-                            <td id="finalTotalDiscount">0.00</td>
-                            <td id="finalTotalPersonalDiscount">0.00</td>
-                            <td id="finalTotalBag">0.00</td>
-                            <td id="finalTotalPercentage">0%</td>
+                            <td id="finalTotalGross" class="yellow-bg">0.00</td>
+                            <td id="finalTotalBox" class="yellow-bg">0.00</td>
+                            <td id="finalTotalDelivery" class="light-blue-bg">0.00</td>
+                            <td id="finalTotalDiscount" class="light-blue-bg">0.00</td>
+                            <td id="finalTotalBag" class="light-blue-bg">0.00</td>
+                            <td id="finalTotalPersonalDiscount" class="green-bg">0.00</td>
+                            <td id="finalTotalPercentage" class="orange-bg">0%</td>
                             <td id="finalTotalNet">0.00</td>
                             <td id="grandTotal" class="grand-total-column">0.00</td>
                         </tr>
@@ -1718,6 +1749,8 @@
                             <h3><i class="fas fa-users"></i> 常用飯友</h3>
                             <div class="frequent-friends-controls">
                                 <button class="manage-friends-btn" id="manageFriendsBtn${newOrderId}"><i class="fas fa-cog"></i> 管理飯友</button>
+                                <button class="save-friends-btn" id="saveFriendsBtn${newOrderId}"><i class="fas fa-save"></i> 保存飯友</button>
+                                <button class="load-friends-btn" id="loadFriendsBtn${newOrderId}"><i class="fas fa-upload"></i> 加載飯友</button>
                             </div>
                         </div>
                         <div class="friend-chips friend-chips-${newOrderId}">
@@ -1739,10 +1772,10 @@
                                         <th width="10%">飯友</th>
                                         <th class="yellow-bg" width="8%">毛付</th>
                                         <th class="yellow-bg" width="8%">外賣盒</th>
-                                        <th class="yellow-bg" width="8%">配送費</th>
+                                        <th class="light-blue-bg" width="8%">配送費</th>
                                         <th class="light-blue-bg" width="8%">商家優惠</th>
-                                        <th class="light-blue-bg" width="8%">獨享優惠</th>
                                         <th class="light-blue-bg" width="8%">膠袋費</th>
+                                        <th class="green-bg" width="8%">獨享優惠</th>
                                         <th class="orange-bg" width="8%">比例</th>
                                         <th width="8%">淨付</th>
                                         <th width="5%">操作</th>
@@ -1754,10 +1787,10 @@
                                         <td><input type="text" class="person-name" value=""></td>
                                         <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0"></td>
                                         <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
-                                        <td class="yellow-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
+                                        <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
-                                        <td class="light-blue-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
+                                        <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                                         <td class="orange-bg percentage">0%</td>
                                         <td class="net-pay">0.00</td>
                                         <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
@@ -1768,10 +1801,10 @@
                                         <td colspan="2">總計</td>
                                         <td class="yellow-bg total-gross">0.00</td>
                                         <td class="yellow-bg total-box">0.00</td>
-                                        <td class="yellow-bg total-delivery">0.00</td>
+                                        <td class="light-blue-bg total-delivery">0.00</td>
                                         <td class="light-blue-bg red-text total-discount">0.00</td>
-                                        <td class="light-blue-bg red-text total-personal-discount">0.00</td>
                                         <td class="light-blue-bg total-bag">0.00</td>
+                                        <td class="green-bg red-text total-personal-discount">0.00</td>
                                         <td class="orange-bg total-percentage">0%</td>
                                         <td class="total-net">0.00</td>
                                         <td></td>
@@ -1887,10 +1920,10 @@
                     <td><input type="text" class="person-name" value=""></td>
                     <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0"></td>
                     <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
-                    <td class="yellow-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
+                    <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
-                    <td class="light-blue-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
+                    <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                     <td class="orange-bg percentage">0%</td>
                     <td class="net-pay">0.00</td>
                     <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
@@ -2136,7 +2169,7 @@
                             const bagFee = parseFloat(row.querySelector('.bag-fee').value) || 0;
                             
                             const personData = allPersons.get(name);
-                            personData.totalGross += mealCost + boxFee + deliveryFee;
+                            personData.totalGross += mealCost;
                             personData.totalBox += boxFee;
                             personData.totalDelivery += deliveryFee;
                             personData.totalDiscount += discount;
@@ -2144,7 +2177,7 @@
                             personData.totalBag += bagFee;
                             personData.totalNet += amount;
                             // 百分比计算基于总金额
-                            personData.totalPercentage = (personData.totalGross / getTotalGrossAcrossAllOrders() * 100);
+                            personData.totalPercentage = (personData.totalNet / getTotalNetAcrossAllOrders() * 100);
                             
                             allPersons.set(name, personData);
                         }
@@ -2174,11 +2207,11 @@
                         <td>${name}</td>
                         <td class="yellow-bg">${data.totalGross.toFixed(2)}</td>
                         <td class="yellow-bg">${data.totalBox.toFixed(2)}</td>
-                        <td class="yellow-bg">${data.totalDelivery.toFixed(2)}</td>
+                        <td class="light-blue-bg">${data.totalDelivery.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalDiscount.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalPersonalDiscount.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalBag.toFixed(2)}</td>
-                        <td class="orange-bg">${data.totalPercentage.toFixed(1)}%</td>
+                        <td class="green-bg">${data.totalPercentage.toFixed(1)}%</td>
                         <td>${data.totalNet.toFixed(2)}</td>
                         <td class="grand-total-column">${data.totalNet.toFixed(2)}</td>
                     `;
@@ -2211,8 +2244,26 @@
                 
                 // Update grand total
                 document.getElementById('grandTotal').textContent = grandTotal.toFixed(2);
+                
+                // 更新总人数（所有订单中不重复的人数）
+                document.getElementById('summaryPeople').textContent = allPersons.size;
             }
             
+            function getTotalNetAcrossAllOrders() {
+                let total = 0;
+                for (let i = 1; i <= orderCounter; i++) {
+                    // 检查订单是否存在
+                    if (!document.querySelector(`#mealTable${i}`)) continue;
+                    
+                    const netElement = document.querySelector(`#mealTable${i} .total-net`);
+                    if (netElement) {
+                        total += parseFloat(netElement.textContent) || 0;
+                    }
+                }
+                return total;
+            }
+            
+            // 重新添加函数用于计算所有订单的总毛付
             function getTotalGrossAcrossAllOrders() {
                 let total = 0;
                 for (let i = 1; i <= orderCounter; i++) {
@@ -3203,6 +3254,10 @@
                 // 添加事件監聽器
                 document.getElementById(`manageFriendsBtn${orderId}`).addEventListener('click', showFriendsDialog);
                 
+                // 添加保存和加載飯友按鈕的事件監聽器
+                document.getElementById(`saveFriendsBtn${orderId}`).addEventListener('click', exportFrequentFriends);
+                document.getElementById(`loadFriendsBtn${orderId}`).addEventListener('click', importFrequentFriends);
+                
                 document.getElementById(`addFriendBtn${orderId}`).addEventListener('click', function() {
                     const nameInput = document.getElementById(`newFriendName${orderId}`);
                     const name = nameInput.value.trim();
@@ -3267,6 +3322,58 @@
                 originalUpdateFrequentFriendsUI();
                 updateAllOrdersFrequentFriendsUI();
             };
+            
+            // 導出常用飯友到文件
+            function exportFrequentFriends() {
+                if (frequentFriends.length === 0) {
+                    alert('沒有飯友可供導出！');
+                    return;
+                }
+                
+                const friends = JSON.stringify(frequentFriends);
+                const blob = new Blob([friends], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'cjt_frequent_friends.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                alert('飯友名單已成功導出！');
+            }
+            
+            // 從文件導入常用飯友
+            function importFrequentFriends() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const data = JSON.parse(e.target.result);
+                            if (Array.isArray(data)) {
+                                // 將新導入的飯友與現有飯友合併，並去重
+                                const mergedFriends = [...new Set([...frequentFriends, ...data])];
+                                frequentFriends = mergedFriends;
+                                saveFrequentFriends();
+                                updateFrequentFriendsUI();
+                                alert('成功導入了 ' + data.length + ' 位飯友！');
+                            } else {
+                                alert('文件格式不正確，請選擇有效的飯友文件。');
+                            }
+                        } catch (err) {
+                            alert('無法讀取文件：' + err.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                });
+                
+                input.click();
+            }
             
             // 設置第一個訂單的常用飯友功能
             setupFrequentFriendsFeature(1);
