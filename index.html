@@ -7,40 +7,43 @@
     <!-- 添加PDF导出所需的库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- 添加字体图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4682B4;
-            --secondary-color: #9370DB; /* 紫色用于第二个表格 */
-            --yellow: #FFFD9A;  /* 更柔和的黄色 */
-            --light-blue: #B8E2F2;  /* 更鲜明的蓝色 */
-            --orange: #FFC87C;  /* 更柔和的橙色 */
-            --green: #A5E1AD;  /* 更鲜明的绿色 */
-            --border-color: #ddd;
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #9b59b6; 
+            --yellow: #fef9e7;  
+            --light-blue: #e8f8fd;  
+            --orange: #fff5eb;  
+            --green: #e8f8f5;  
+            --border-color: #e0e0e0;
             --header-bg: #f7f7f7;
-            --button-hover: #3A6B99;
-            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
+            --button-hover: #2980b9;
+            --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            --border-radius: 10px;
             
             /* 定义多个订单颜色 */
-            --order1-color: #4682B4; /* 蓝色 - 原primary-color */
-            --order1-color-light: #d1e6f9; /* 蓝色浅色背景 */
-            --order1-color-dark: #2C5D8F; /* 蓝色深色渐变 */
+            --order1-color: #3498db; 
+            --order1-color-light: #e8f7fe; 
+            --order1-color-dark: #2980b9; 
             
-            --order2-color: #9370DB; /* 紫色 - 原secondary-color */
-            --order2-color-light: #e9e0fa; /* 紫色浅色背景 */
-            --order2-color-dark: #7D5CC1; /* 紫色深色渐变 */
+            --order2-color: #9b59b6; 
+            --order2-color-light: #f5eafa; 
+            --order2-color-dark: #8e44ad; 
             
-            --order3-color: #e67e22; /* 橙色 */
-            --order3-color-light: #fae7d6; /* 橙色浅色背景 */
-            --order3-color-dark: #d35400; /* 橙色深色渐变 */
+            --order3-color: #e67e22; 
+            --order3-color-light: #fef2e7; 
+            --order3-color-dark: #d35400; 
             
-            --order4-color: #16a085; /* 绿松石色 */
-            --order4-color-light: #d1f2eb; /* 绿松石浅色背景 */
-            --order4-color-dark: #0e6251; /* 绿松石深色渐变 */
+            --order4-color: #16a085; 
+            --order4-color-light: #e8f8f5; 
+            --order4-color-dark: #0e6251; 
             
-            --order5-color: #c0392b; /* 红色 */
-            --order5-color-light: #f2d7d5; /* 红色浅色背景 */
-            --order5-color-dark: #962d22; /* 红色深色渐变 */
+            --order5-color: #e74c3c; 
+            --order5-color-light: #fdedec; 
+            --order5-color-dark: #c0392b; 
         }
         
         * {
@@ -53,8 +56,8 @@
         body {
             line-height: 1.6;
             color: #333;
-            background-color: #f5f5f5;
-            padding-bottom: 60px;
+            background-color: #f9f9f9;
+            padding-bottom: 80px;
         }
         
         .container {
@@ -64,25 +67,41 @@
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary-color), #2C5D8F);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
-            padding: 20px 0;
+            padding: 25px 0;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             box-shadow: var(--box-shadow);
             border-radius: 0 0 var(--border-radius) var(--border-radius);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
         }
         
         h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .toolbar {
             display: flex;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 20px;
             padding: 5px;
@@ -102,32 +121,41 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 500;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             min-width: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         button:hover {
             background-color: var(--button-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
         }
         
         button:active {
             transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         #addOrderBtn, #calculateBtn {
-            background: linear-gradient(135deg, #5a92c6, var(--primary-color));
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        #addOrderBtn i, #calculateBtn i {
+            font-size: 14px;
         }
         
         #clearAllBtn {
-            background: linear-gradient(135deg, #f5716c, #e74c3c);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             font-weight: bold;
         }
         
         #clearAllBtn:hover {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: linear-gradient(135deg, #c0392b, #a93226);
         }
         
         .calculator-section {
@@ -135,21 +163,29 @@
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             overflow: hidden;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         
         .calculator-section:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
         .section-header {
             background: linear-gradient(135deg, var(--order1-color), var(--order1-color-dark));
             color: white;
-            padding: 12px 18px;
+            padding: 15px 20px;
             font-weight: bold;
             font-size: 16px;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-header i {
+            font-size: 18px;
         }
         
         .section-header.secondary {
@@ -158,47 +194,65 @@
         
         .table-container {
             overflow-x: auto;
-            padding: 10px;
+            padding: 15px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
         }
         
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
         th, td {
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 12px 10px;
             text-align: center;
             transition: background-color 0.2s;
         }
         
         th {
-            background-color: var(--header-bg);
-            position: sticky;
-            top: 0;
+            background-color: #f5f7fa;
+            color: #34495e;
             font-weight: 600;
             letter-spacing: 0.3px;
+            border-bottom: 2px solid #dfe6e9;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
         tr:hover td {
-            background-color: #f9f9f9;
+            background-color: #f8fafc;
         }
         
         input, select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 10px;
+            border: 1px solid #dfe6e9;
+            border-radius: 6px;
             text-align: center;
-            transition: border 0.2s;
+            transition: all 0.3s;
             font-size: 14px;
+            background-color: #fafafa;
         }
         
         input:focus, select:focus {
             border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(70, 130, 180, 0.2);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            background-color: white;
+        }
+        
+        input:hover, select:hover {
+            border-color: #bdc3c7;
+            background-color: #ffffff;
+        }
+        
+        input[readonly] {
+            background-color: #f7f9fa;
+            cursor: default;
         }
         
         .yellow-bg {
@@ -219,7 +273,13 @@
         
         .total-row {
             font-weight: bold;
-            background-color: #e9f5ff;
+            background-color: #f5f9ff;
+            border-top: 2px solid #dfe6e9;
+        }
+        
+        .total-row td {
+            padding: 15px 10px;
+            font-size: 15px;
         }
         
         .red-text {
@@ -231,8 +291,59 @@
         }
         
         .add-row {
-            margin: 15px 0;
+            margin: 20px 0;
             text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .add-row-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            padding: 10px 20px;
+            border-radius: 30px;
+            min-width: auto;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+        
+        .add-row-btn:hover {
+            background: linear-gradient(135deg, #27ae60, #219651);
+            transform: translateY(-2px);
+        }
+        
+        .add-row-btn:hover i {
+            transform: scale(1.2);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .remove-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .remove-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
         }
         
         .summary-section {
@@ -240,98 +351,152 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 25px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         
         .summary-card {
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            padding: 20px;
+            padding: 25px;
             flex: 1;
             min-width: 250px;
             transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
         }
         
         .summary-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .summary-card:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(52,152,219,0.05) 50%);
+            border-radius: 0 0 0 100px;
+            z-index: 1;
         }
         
         .summary-title {
             color: var(--primary-color);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-size: 18px;
             font-weight: bold;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 8px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .summary-title i {
+            color: var(--primary-color);
+            font-size: 20px;
         }
         
         .summary-items {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
         }
         
         .summary-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+        
+        .summary-item:hover {
+            background-color: #f9f9f9;
+            transform: translateX(5px);
         }
         
         .summary-label {
-            font-weight: bold;
+            font-weight: 600;
             color: #555;
         }
         
         .order-container {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
         
         .order-tabs {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             margin-bottom: 15px;
-            padding: 0 5px;
+            padding: 0 8px;
+            flex-wrap: wrap;
         }
         
         .order-tab {
-            padding: 10px 20px;
-            background-color: #eee;
-            border-radius: 8px 8px 0 0;
+            padding: 12px 24px;
+            background-color: #f2f6f9;
+            border-radius: 10px 10px 0 0;
             cursor: pointer;
             font-weight: 500;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e9ef;
             border-bottom: none;
-            transition: all 0.2s;
-            position: relative; /* 为删除按钮定位 */
+            transition: all 0.3s;
+            position: relative;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 130px;
+            justify-content: center;
+            font-size: 15px;
         }
         
         .order-tab:hover {
-            background-color: #e0e0e0;
+            background-color: #e5ecf2;
+            transform: translateY(-3px);
         }
         
         .order-tab.active {
             background: linear-gradient(to bottom, var(--order1-color), var(--order1-color-dark));
             color: white;
             border-color: var(--order1-color);
+            transform: translateY(-3px);
+            padding-bottom: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            z-index: 10;
         }
         
         .order-tab.secondary.active {
-            background: linear-gradient(to bottom, var(--secondary-color), #7D5CC1);
+            background: linear-gradient(to bottom, var(--secondary-color), var(--secondary-color-dark));
             border-color: var(--secondary-color);
         }
         
         #addOrderTabBtn {
-            width: 30px;
-            height: 40px;
+            width: 50px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
-            border-radius: 8px 8px 0 0;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 20px;
             font-weight: bold;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            transition: all 0.3s;
+            min-width: 0;
+        }
+        
+        #addOrderTabBtn:hover {
+            background: linear-gradient(135deg, #27ae60, #219651);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .order-tab-content {
@@ -340,40 +505,56 @@
         
         .order-tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.5s ease;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .final-summary {
-            background: linear-gradient(135deg, #5cb85c, #449d44);
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .final-summary i {
+            font-size: 20px;
         }
         
         #finalSummaryTable {
             border-collapse: separate;
             border-spacing: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         #finalSummaryTable th, #finalSummaryTable td {
-            border: 1px solid #ddd;
+            border: 1px solid #e5e9ef;
+            padding: 12px 10px;
         }
         
         #finalSummaryTable th {
-            background-color: #f2f9f2;
-            color: #2c7c2c;
+            background-color: #f7fcf7;
+            color: #27ae60;
+            font-weight: 600;
         }
         
         #finalSummaryTable tr:last-child td {
             font-weight: bold;
-            background-color: #f0fff0;
+            background-color: #f0fff5;
+            padding: 15px 10px;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .summary-section {
                 flex-direction: column;
+            }
+            
+            .summary-card {
+                min-width: 100%;
             }
             
             .toolbar {
@@ -382,7 +563,9 @@
             
             .button-group {
                 width: 100%;
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
             }
             
             button {
@@ -390,8 +573,63 @@
             }
             
             .order-tab {
-                padding: 8px 12px;
+                padding: 10px 15px;
                 font-size: 14px;
+                min-width: 110px;
+            }
+            
+            .order-tab.active {
+                padding-bottom: 13px;
+            }
+            
+            .table-container {
+                padding: 10px 5px;
+            }
+            
+            th, td {
+                padding: 10px 5px;
+                font-size: 13px;
+            }
+            
+            input, select {
+                padding: 8px 5px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .summary-items {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .order-tabs {
+                gap: 5px;
+                padding: 0 5px;
+            }
+            
+            .order-tab {
+                padding: 8px 10px;
+                min-width: 90px;
+                font-size: 13px;
+            }
+            
+            #addOrderTabBtn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .section-header {
+                padding: 12px 15px;
+                font-size: 15px;
             }
         }
         
@@ -732,63 +970,322 @@
         .order-tab[data-order-id="5"]:hover {
             background-color: var(--order5-color-light);
         }
+        
+        /* 常用飯友功能相關樣式 */
+        .frequent-friends {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .frequent-friends-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .frequent-friends-title h3 {
+            margin: 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .frequent-friends-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .friend-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .friend-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background-color: #e8f7fe;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #bde0f3;
+            transition: all 0.2s;
+        }
+        
+        .friend-chip:hover {
+            background-color: #d0ebfa;
+            transform: translateY(-2px);
+        }
+        
+        .friend-chip i {
+            font-size: 12px;
+            color: #3498db;
+        }
+        
+        .friend-chip .remove-friend {
+            color: #e74c3c;
+            font-size: 14px;
+            opacity: 0.7;
+            margin-left: 5px;
+        }
+        
+        .friend-chip .remove-friend:hover {
+            opacity: 1;
+        }
+        
+        .add-friend-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .add-friend-form input {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .add-friend-form button {
+            min-width: auto;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .add-friend-form button:hover {
+            background: linear-gradient(135deg, #27ae60, #219651);
+        }
+        
+        .manage-friends-btn {
+            background: transparent;
+            border: 1px solid #3498db;
+            color: #3498db;
+            box-shadow: none;
+            padding: 5px 10px;
+            font-size: 13px;
+            min-width: auto;
+        }
+        
+        .manage-friends-btn:hover {
+            background: rgba(52, 152, 219, 0.1);
+            box-shadow: none;
+        }
+        
+        /* 常用飯友管理對話框 */
+        .friends-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            max-width: 90%;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .friends-dialog-header {
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .friends-dialog-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .friends-dialog-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            min-width: auto;
+            padding: 0;
+            box-shadow: none;
+        }
+        
+        .friends-dialog-close:hover {
+            transform: scale(1.1);
+            box-shadow: none;
+        }
+        
+        .friends-dialog-body {
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .friends-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .friends-table th,
+        .friends-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .friends-table th {
+            background: #f9f9f9;
+        }
+        
+        .friends-dialog-footer {
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .friends-dialog-footer button {
+            margin-left: 10px;
+            min-width: auto;
+            padding: 8px 15px;
+        }
+        
+        .delete-confirm-dialog .buttons,
+        .export-options .buttons,
+        .friends-dialog-footer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .cancel-btn:hover {
+            background: linear-gradient(135deg, #7f8c8d, #6c7a7c);
+            transform: translateY(-2px);
+        }
+        
+        .confirm-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .confirm-btn:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+        }
+        
+        #confirmExportBtn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        #confirmExportBtn:hover {
+            background: linear-gradient(135deg, #2980b9, #1f6aa5);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>CJT體重增加費用分攤計算器</h1>
+        <h1><i class="fas fa-calculator"></i> CJT體重增加費用分攤計算器</h1>
     </header>
     
     <div class="container">
         <div class="toolbar">
             <div class="button-group">
-                <button id="clearAllBtn">清除所有數據</button>
-            </div>
-            <div class="button-group">
-                <button id="exportPdfBtn">匯出PDF</button>
+                <button id="clearAllBtn"><i class="fas fa-trash-alt"></i> 清除所有</button>
+                <button id="exportPdfBtn"><i class="fas fa-file-pdf"></i> 輸出PDF</button>
             </div>
         </div>
         
         <div class="summary-section">
             <div class="summary-card">
-                <div class="summary-title">訂單摘要</div>
+                <div class="summary-title"><i class="fas fa-file-invoice-dollar"></i> 訂單摘要</div>
                 <div class="summary-items">
                     <div class="summary-item">
-                        <div class="summary-label">總毛額:</div>
+                        <div class="summary-label"><i class="fas fa-money-bill-wave"></i> 總毛額:</div>
                         <div id="summaryGross">0.00</div>
                     </div>
                     <div class="summary-item">
-                        <div class="summary-label">總優惠:</div>
+                        <div class="summary-label"><i class="fas fa-tags"></i> 總優惠:</div>
                         <div id="summaryDiscount" class="red-text">0.00</div>
                     </div>
                     <div class="summary-item">
-                        <div class="summary-label">總淨額:</div>
+                        <div class="summary-label"><i class="fas fa-receipt"></i> 總淨額:</div>
                         <div id="summaryNet">0.00</div>
                     </div>
                     <div class="summary-item">
-                        <div class="summary-label">人數:</div>
+                        <div class="summary-label"><i class="fas fa-users"></i> 人數:</div>
                         <div id="summaryPeople">0</div>
                     </div>
                 </div>
             </div>
             
             <div class="summary-card">
-                <div class="summary-title">費用明細</div>
+                <div class="summary-title"><i class="fas fa-list-alt"></i> 費用明細</div>
                 <div class="summary-items">
                     <div class="summary-item">
-                        <div class="summary-label">餐點總額:</div>
+                        <div class="summary-label"><i class="fas fa-utensils"></i> 餐點總額:</div>
                         <div id="summaryFood">0.00</div>
                     </div>
                     <div class="summary-item">
-                        <div class="summary-label">外賣盒費:</div>
+                        <div class="summary-label"><i class="fas fa-box"></i> 外賣盒費:</div>
                         <div id="summaryBox">0.00</div>
                     </div>
                     <div class="summary-item">
-                        <div class="summary-label">配送費:</div>
+                        <div class="summary-label"><i class="fas fa-truck"></i> 配送費:</div>
                         <div id="summaryDelivery">0.00</div>
                     </div>
                     <div class="summary-item">
-                        <div class="summary-label">膠袋費:</div>
+                        <div class="summary-label"><i class="fas fa-shopping-bag"></i> 膠袋費:</div>
                         <div id="summaryBag">0.00</div>
                     </div>
                 </div>
@@ -797,99 +1294,119 @@
         
         <!-- 订单选项卡 -->
         <div class="order-tabs" id="orderTabs">
-            <div class="order-tab active" data-order-id="1">訂單 1</div>
-            <button id="addOrderTabBtn">+</button>
+            <div class="order-tab active" data-order-id="1"><i class="fas fa-clipboard-list"></i> 訂單 1</div>
+            <button id="addOrderTabBtn"><i class="fas fa-plus"></i></button>
         </div>
         
         <!-- 订单内容 -->
         <div id="orderContents">
             <!-- 订单1 -->
             <div class="order-tab-content active" data-order-id="1">
-        <div class="calculator-section">
-                    <div class="section-header">餐點明細及分攤 - 訂單 1</div>
-            <div class="table-container">
+                <!-- 常用飯友區域 -->
+                <div class="frequent-friends">
+                    <div class="frequent-friends-title">
+                        <h3><i class="fas fa-users"></i> 常用飯友</h3>
+                        <div class="frequent-friends-controls">
+                            <button class="manage-friends-btn" id="manageFriendsBtn"><i class="fas fa-cog"></i> 管理飯友</button>
+                        </div>
+                    </div>
+                    <div class="friend-chips friend-chips-1" id="friendChips">
+                        <!-- 這裡會動態生成常用飯友按鈕 -->
+                    </div>
+                    <div class="add-friend-form">
+                        <input type="text" id="newFriendName" placeholder="輸入新飯友名稱">
+                        <button id="addFriendBtn"><i class="fas fa-plus"></i> 添加</button>
+                    </div>
+                </div>
+
+                <div class="calculator-section">
+                    <div class="section-header"><i class="fas fa-utensils"></i> 餐點明細及分攤 - 訂單 1</div>
+                    <div class="table-container">
                         <table class="meal-table" id="mealTable1">
-                    <thead>
-                        <tr>
-                            <th width="5%">序號</th>
-                            <th width="10%">飯友</th>
-                            <th class="yellow-bg" width="10%">毛付</th>
-                            <th class="yellow-bg" width="10%">外賣盒</th>
-                            <th class="yellow-bg" width="10%">配送費</th>
-                            <th class="light-blue-bg" width="10%">商家優惠</th>
-                            <th class="light-blue-bg" width="10%">膠袋費</th>
-                            <th class="orange-bg" width="10%">比例</th>
-                            <th width="10%">淨付</th>
-                            <th width="5%">操作</th>
-                        </tr>
-                    </thead>
+                            <thead>
+                                <tr>
+                                    <th width="5%">序號</th>
+                                    <th width="10%">飯友</th>
+                                    <th class="yellow-bg" width="8%">毛付</th>
+                                    <th class="yellow-bg" width="8%">外賣盒</th>
+                                    <th class="yellow-bg" width="8%">配送費</th>
+                                    <th class="light-blue-bg" width="8%">商家優惠</th>
+                                    <th class="light-blue-bg" width="8%">獨享優惠</th>
+                                    <th class="light-blue-bg" width="8%">膠袋費</th>
+                                    <th class="orange-bg" width="8%">比例</th>
+                                    <th width="8%">淨付</th>
+                                    <th width="5%">操作</th>
+                                </tr>
+                            </thead>
                             <tbody class="meal-table-body" id="mealTableBody1">
-                        <!-- Default first row -->
-                        <tr class="item-row" data-row-id="1">
-                            <td>01</td>
-                            <td><input type="text" class="person-name" value=""></td>
-                            <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0"></td>
-                            <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
+                                <!-- Default first row -->
+                                <tr class="item-row" data-row-id="1">
+                                    <td>01</td>
+                                    <td><input type="text" class="person-name" value="" placeholder="姓名"></td>
+                                    <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0" placeholder="餐費"></td>
+                                    <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0" placeholder="盒費"></td>
                                     <td class="yellow-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
+                                    <td class="light-blue-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
-                            <td class="orange-bg percentage">0%</td>
-                            <td class="net-pay">0.00</td>
-                            <td><span class="remove-btn">×</span></td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td colspan="2">總計</td>
+                                    <td class="orange-bg percentage">0%</td>
+                                    <td class="net-pay">0.00</td>
+                                    <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="total-row">
+                                    <td colspan="2">總計</td>
                                     <td class="yellow-bg total-gross">0.00</td>
                                     <td class="yellow-bg total-box">0.00</td>
                                     <td class="yellow-bg total-delivery">0.00</td>
                                     <td class="light-blue-bg red-text total-discount">0.00</td>
+                                    <td class="light-blue-bg red-text total-personal-discount">0.00</td>
                                     <td class="light-blue-bg total-bag">0.00</td>
                                     <td class="orange-bg total-percentage">0%</td>
                                     <td class="total-net">0.00</td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="add-row">
-                        <button class="add-row-btn" data-order-id="1">新增一行</button>
-            </div>
-        </div>
-        
-        <div class="calculator-section">
-                    <div class="section-header">其他支出明細 - 訂單 1</div>
-            <div class="table-container">
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="add-row">
+                        <button class="add-row-btn" data-order-id="1"><i class="fas fa-user-plus"></i> 新增一行</button>
+                    </div>
+                </div>
+                
+                <div class="calculator-section">
+                    <div class="section-header"><i class="fas fa-money-bill-wave"></i> 其他支出明細 - 訂單 1</div>
+                    <div class="table-container">
                         <table class="expense-table" id="expenseTable1">
-                    <thead>
-                        <tr>
-                            <th width="30%">項目</th>
-                            <th width="20%">金額</th>
-                            <th width="30%">備註</th>
-                            <th width="20%">操作</th>
-                        </tr>
-                    </thead>
+                            <thead>
+                                <tr>
+                                    <th width="30%">項目</th>
+                                    <th width="20%">金額</th>
+                                    <th width="30%">備註</th>
+                                    <th width="20%">操作</th>
+                                </tr>
+                            </thead>
                             <tbody class="expense-table-body" id="expenseTableBody1">
-                        <tr class="expense-row">
-                                    <td>配送費</td>
+                                <tr class="expense-row">
+                                    <td><i class="fas fa-truck"></i> 配送費</td>
                                     <td><input type="number" step="0.01" class="expense-amount delivery-fee-total" value="0"></td>
                                     <td><input type="text" class="expense-note" value="配送費用"></td>
-                            <td></td>
-                        </tr>
-                        <tr class="expense-row">
-                                    <td>商家優惠</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="expense-row">
+                                    <td><i class="fas fa-tags"></i> 商家優惠</td>
                                     <td><input type="number" step="0.01" class="expense-amount merchant-discount" value="0"></td>
                                     <td><input type="text" class="expense-note" value="由商家提供的折扣"></td>
-                            <td></td>
-                        </tr>
-                        <tr class="expense-row">
-                                    <td>膠袋費</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="expense-row">
+                                    <td><i class="fas fa-shopping-bag"></i> 膠袋費</td>
                                     <td><input type="number" step="0.01" class="expense-amount bag-fee-total" value="0"></td>
-                            <td><input type="text" class="expense-note" value="環保膠袋費用"></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
+                                    <td><input type="text" class="expense-note" value="環保膠袋費用"></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -905,17 +1422,18 @@
                         <tr>
                             <th rowspan="2" width="5%">序號</th>
                             <th rowspan="2" width="10%">飯友</th>
-                            <th colspan="7" class="order-group-header">每人消費明細</th>
+                            <th colspan="8" class="order-group-header">每人消費明細</th>
                             <th rowspan="2" class="grand-total-column" width="8%">合計</th>
                         </tr>
                         <tr>
-                            <th class="yellow-bg" width="9%">餐費</th>
-                            <th class="yellow-bg" width="9%">外賣盒</th>
-                            <th class="yellow-bg" width="9%">配送費</th>
-                            <th class="light-blue-bg" width="9%">商家優惠</th>
-                            <th class="light-blue-bg" width="9%">膠袋費</th>
-                            <th class="orange-bg" width="9%">比例</th>
-                            <th width="9%">淨付</th>
+                            <th class="yellow-bg" width="8%">餐費</th>
+                            <th class="yellow-bg" width="8%">外賣盒</th>
+                            <th class="yellow-bg" width="8%">配送費</th>
+                            <th class="light-blue-bg" width="8%">商家優惠</th>
+                            <th class="light-blue-bg" width="8%">獨享優惠</th>
+                            <th class="light-blue-bg" width="8%">膠袋費</th>
+                            <th class="orange-bg" width="8%">比例</th>
+                            <th width="8%">淨付</th>
                         </tr>
                     </thead>
                     <tbody id="finalSummaryTableBody">
@@ -928,6 +1446,7 @@
                             <td id="finalTotalBox">0.00</td>
                             <td id="finalTotalDelivery">0.00</td>
                             <td id="finalTotalDiscount">0.00</td>
+                            <td id="finalTotalPersonalDiscount">0.00</td>
                             <td id="finalTotalBag">0.00</td>
                             <td id="finalTotalPercentage">0%</td>
                             <td id="finalTotalNet">0.00</td>
@@ -940,7 +1459,7 @@
     </div>
     
     <div class="footer">
-        CJT體重增加費用分攤計算器 © 2025
+        CJT體重增加費用分攤計算器 By GaryLEI © 2025
     </div>
     
     <!-- 添加PDF导出选项对话框 -->
@@ -976,8 +1495,8 @@
             <input type="text" id="exportFilename" value="費用分攤計算-" class="export-select">
         </div>
         <div class="buttons">
-            <button id="cancelExportBtn">取消</button>
-            <button id="confirmExportBtn">匯出</button>
+            <button id="cancelExportBtn"><i class="fas fa-times"></i> 取消</button>
+            <button id="confirmExportBtn"><i class="fas fa-file-pdf"></i> 匯出</button>
         </div>
     </div>
 
@@ -986,21 +1505,75 @@
         <p>正在生成PDF，請稍候...</p>
     </div>
     
+    <div class="delete-confirm-dialog" id="deleteOrderDialog">
+        <h3>刪除訂單</h3>
+        <p>您確定要刪除此訂單嗎？此操作無法恢復，且訂單中的所有數據都將丟失。</p>
+        <div class="buttons">
+            <button class="cancel-btn"><i class="fas fa-times"></i> 取消</button>
+            <button class="confirm-btn"><i class="fas fa-trash-alt"></i> 確定刪除</button>
+        </div>
+    </div>
+    
+    <!-- 常用飯友管理對話框 -->
+    <div class="friends-dialog" id="friendsDialog">
+        <div class="friends-dialog-header">
+            <h3><i class="fas fa-users"></i> 管理常用飯友</h3>
+            <button class="friends-dialog-close" id="closeFriendsDialog"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="friends-dialog-body">
+            <table class="friends-table" id="friendsTable">
+                <thead>
+                    <tr>
+                        <th width="70%">飯友名稱</th>
+                        <th width="30%">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="friendsTableBody">
+                    <!-- 會動態填充飯友列表 -->
+                </tbody>
+            </table>
+        </div>
+        <div class="friends-dialog-footer">
+            <button id="closeDialogBtn" class="cancel-btn"><i class="fas fa-times"></i> 關閉</button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize global variables
             let orderCounter = 1;
             let rowCounters = { 1: 1 };
             let activeOrderId = 1;
+            let frequentFriends = []; // 存儲常用飯友的數組
             
-            // Set up event handlers
+            // 初始化時從localStorage加載常用飯友
+            loadFrequentFriends();
+            
+            // 設置事件處理程序
             document.querySelector('.add-row-btn[data-order-id="1"]').addEventListener('click', function() {
                 addNewRow(1);
+            });
+            
+            // 常用飯友功能
+            document.getElementById('addFriendBtn').addEventListener('click', addNewFrequentFriend);
+            document.getElementById('manageFriendsBtn').addEventListener('click', showFriendsDialog);
+            document.getElementById('closeFriendsDialog').addEventListener('click', hideFriendsDialog);
+            document.getElementById('closeDialogBtn').addEventListener('click', hideFriendsDialog);
+            document.getElementById('newFriendName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addNewFrequentFriend();
+                }
             });
             
             // 保留添加订单按钮在选项卡区域
             document.getElementById('addOrderTabBtn').addEventListener('click', addNewOrder);
             document.getElementById('clearAllBtn').addEventListener('click', clearAllData);
+            
+            // 添加PDF導出功能相關監聽器
+            document.getElementById('exportPdfBtn').addEventListener('click', function() {
+                overlay.style.display = 'block';
+                exportOptions.style.display = 'block';
+            });
             
             // Setup tab switching
             setupTabs();
@@ -1010,9 +1583,6 @@
             
             // Setup input change handlers for automatic calculation
             setupInputHandlers();
-            
-            // Add some sample data
-            addSampleData();
             
             // Calculate initially
             calculateAll();
@@ -1030,12 +1600,6 @@
             const today = new Date();
             const dateStr = `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
             document.getElementById('exportFilename').value = `費用分攤計算-${dateStr}`;
-            
-            // 显示导出选项对话框
-            exportPdfBtn.addEventListener('click', function() {
-                overlay.style.display = 'block';
-                exportOptions.style.display = 'block';
-            });
             
             // 取消导出
             cancelExportBtn.addEventListener('click', function() {
@@ -1095,8 +1659,20 @@
             }
             
             function addNewOrder() {
-                orderCounter++;
-                const newOrderId = orderCounter;
+                // 尋找最小未使用的訂單號
+                const existingTabs = document.querySelectorAll('.order-tab');
+                const usedOrderIds = Array.from(existingTabs)
+                    .filter(tab => tab.dataset.orderId) // 過濾掉沒有orderId的元素
+                    .map(tab => parseInt(tab.dataset.orderId));
+                
+                // 從2開始找到第一個未使用的訂單號（訂單1永遠存在）
+                let newOrderId = 2;
+                while (usedOrderIds.includes(newOrderId)) {
+                    newOrderId++;
+                }
+                
+                // 更新訂單計數器，確保它至少等於最新的訂單ID
+                orderCounter = Math.max(newOrderId, orderCounter);
                 rowCounters[newOrderId] = 1;
                 
                 // Add new tab
@@ -1110,7 +1686,7 @@
                 if (newOrderId > 1) {
                     const deleteBtn = document.createElement('span');
                     deleteBtn.className = 'order-delete-btn';
-                    deleteBtn.innerHTML = '×';
+                    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
                     deleteBtn.setAttribute('title', '刪除此訂單');
                     deleteBtn.dataset.orderId = newOrderId;
                     
@@ -1136,6 +1712,23 @@
                 const headerClass = 'section-header';
                 
                 newContent.innerHTML = `
+                    <!-- 常用飯友區域 -->
+                    <div class="frequent-friends">
+                        <div class="frequent-friends-title">
+                            <h3><i class="fas fa-users"></i> 常用飯友</h3>
+                            <div class="frequent-friends-controls">
+                                <button class="manage-friends-btn" id="manageFriendsBtn${newOrderId}"><i class="fas fa-cog"></i> 管理飯友</button>
+                            </div>
+                        </div>
+                        <div class="friend-chips friend-chips-${newOrderId}">
+                            <!-- 這裡會動態生成常用飯友按鈕 -->
+                        </div>
+                        <div class="add-friend-form">
+                            <input type="text" id="newFriendName${newOrderId}" placeholder="輸入新飯友名稱">
+                            <button id="addFriendBtn${newOrderId}"><i class="fas fa-plus"></i> 添加</button>
+                        </div>
+                    </div>
+
                     <div class="calculator-section">
                         <div class="${headerClass}">餐點明細及分攤 - 訂單 ${newOrderId}</div>
                         <div class="table-container">
@@ -1144,13 +1737,14 @@
                                     <tr>
                                         <th width="5%">序號</th>
                                         <th width="10%">飯友</th>
-                                        <th class="yellow-bg" width="10%">毛付</th>
-                                        <th class="yellow-bg" width="10%">外賣盒</th>
-                                        <th class="yellow-bg" width="10%">配送費</th>
-                                        <th class="light-blue-bg" width="10%">商家優惠</th>
-                                        <th class="light-blue-bg" width="10%">膠袋費</th>
-                                        <th class="orange-bg" width="10%">比例</th>
-                                        <th width="10%">淨付</th>
+                                        <th class="yellow-bg" width="8%">毛付</th>
+                                        <th class="yellow-bg" width="8%">外賣盒</th>
+                                        <th class="yellow-bg" width="8%">配送費</th>
+                                        <th class="light-blue-bg" width="8%">商家優惠</th>
+                                        <th class="light-blue-bg" width="8%">獨享優惠</th>
+                                        <th class="light-blue-bg" width="8%">膠袋費</th>
+                                        <th class="orange-bg" width="8%">比例</th>
+                                        <th width="8%">淨付</th>
                                         <th width="5%">操作</th>
                                     </tr>
                                 </thead>
@@ -1162,10 +1756,11 @@
                                         <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
                                         <td class="yellow-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
+                                        <td class="light-blue-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
                                         <td class="orange-bg percentage">0%</td>
                                         <td class="net-pay">0.00</td>
-                                        <td><span class="remove-btn">×</span></td>
+                                        <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -1175,6 +1770,7 @@
                                         <td class="yellow-bg total-box">0.00</td>
                                         <td class="yellow-bg total-delivery">0.00</td>
                                         <td class="light-blue-bg red-text total-discount">0.00</td>
+                                        <td class="light-blue-bg red-text total-personal-discount">0.00</td>
                                         <td class="light-blue-bg total-bag">0.00</td>
                                         <td class="orange-bg total-percentage">0%</td>
                                         <td class="total-net">0.00</td>
@@ -1184,7 +1780,7 @@
                             </table>
                         </div>
                         <div class="add-row">
-                            <button class="add-row-btn" data-order-id="${newOrderId}">新增一行</button>
+                            <button class="add-row-btn" data-order-id="${newOrderId}"><i class="fas fa-user-plus"></i> 新增一行</button>
                         </div>
                     </div>
                     
@@ -1241,29 +1837,50 @@
                 // Setup input handlers for the new order
                 setupInputHandlers();
                 
+                // 設置新訂單的常用飯友功能
+                setupFrequentFriendsFeature(newOrderId);
+                
                 // Update headers in final summary table
                 updateFinalSummaryHeaders();
                 
-                // 自动计算
+                // 自动計算
                 calculateAll();
                 updateFinalSummary();
             }
             
             function updateFinalSummaryHeaders() {
-                // 没有必要动态调整表头，总结算表现在固定显示，不再根据订单数量变化
-                // 该函数保留作为接口兼容，但不执行任何操作
+                // 確保所有訂單的資料都重新計算並更新到總結算表
+                for (let i = 1; i <= orderCounter; i++) {
+                    // 檢查訂單是否存在
+                    if (document.querySelector(`#mealTable${i}`)) {
+                        calculateOrderById(i);
+                    }
+                }
+                
+                // 更新總結算表，確保刪除訂單後總結算表正確顯示
+                updateFinalSummary();
             }
             
             function addNewRow(orderId) {
-                rowCounters[orderId]++;
-                const rowNum = rowCounters[orderId];
+                // 尋找最小未使用的行號
+                const existingRows = document.querySelectorAll(`#mealTableBody${orderId} .item-row`);
+                const usedIds = Array.from(existingRows).map(row => parseInt(row.dataset.rowId));
+                
+                // 從1開始找到第一個未使用的行號
+                let newRowId = 1;
+                while (usedIds.includes(newRowId)) {
+                    newRowId++;
+                }
+                
+                rowCounters[orderId] = Math.max(newRowId, rowCounters[orderId] || 0); // 更新計數器
+                
                 const tbody = document.getElementById(`mealTableBody${orderId}`);
                 const newRow = document.createElement('tr');
                 newRow.className = 'item-row';
-                newRow.dataset.rowId = rowNum;
+                newRow.dataset.rowId = newRowId;
                 
                 // Format row number with leading zero
-                const displayRowNum = rowNum < 10 ? `0${rowNum}` : rowNum;
+                const displayRowNum = newRowId < 10 ? `0${newRowId}` : newRowId;
                 
                 newRow.innerHTML = `
                     <td>${displayRowNum}</td>
@@ -1272,10 +1889,11 @@
                     <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
                     <td class="yellow-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
+                    <td class="light-blue-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
                     <td class="orange-bg percentage">0%</td>
                     <td class="net-pay">0.00</td>
-                    <td><span class="remove-btn">×</span></td>
+                    <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
                 `;
                 
                 tbody.appendChild(newRow);
@@ -1305,6 +1923,10 @@
                         
                         if (table.querySelectorAll('.item-row').length > 1) {
                             row.remove();
+                            
+                            // 更新行號顯示（可選，不影響功能）
+                            updateRowNumbers(orderId);
+                            
                             // 自动触发计算
                             calculateOrderById(orderId);
                             updateFinalSummary();
@@ -1315,9 +1937,19 @@
                 });
             }
             
+            // 更新行號顯示
+            function updateRowNumbers(orderId) {
+                const rows = document.querySelectorAll(`#mealTableBody${orderId} .item-row`);
+                rows.forEach(row => {
+                    const rowId = parseInt(row.dataset.rowId);
+                    const displayRowNum = rowId < 10 ? `0${rowId}` : rowId;
+                    row.querySelector('td:first-child').textContent = displayRowNum;
+                });
+            }
+            
             function setupInputHandlers() {
                 // Remove any existing event listeners (by cloning and replacing)
-                document.querySelectorAll('.meal-cost, .box-fee').forEach(input => {
+                document.querySelectorAll('.meal-cost, .box-fee, .personal-discount').forEach(input => {
                     const newInput = input.cloneNode(true);
                     input.parentNode.replaceChild(newInput, input);
                 });
@@ -1328,7 +1960,7 @@
                 });
                 
                 // Add new event listeners with automatic calculation
-                document.querySelectorAll('.meal-cost, .box-fee').forEach(input => {
+                document.querySelectorAll('.meal-cost, .box-fee, .personal-discount').forEach(input => {
                     input.addEventListener('input', function() {
                         const table = this.closest('table');
                         const orderId = table.id.replace('mealTable', '');
@@ -1374,16 +2006,20 @@
                 const discountTotal = parseFloat(document.querySelector(`#expenseTable${orderId} .merchant-discount`).value) || 0;
                 const bagTotal = parseFloat(document.querySelector(`#expenseTable${orderId} .bag-fee-total`).value) || 0;
                 
-                // Calculate per person amounts
-                const deliveryPerPerson = numPeople > 0 ? deliveryTotal / numPeople : 0;
-                const discountPerPerson = numPeople > 0 ? discountTotal / numPeople : 0;
-                const bagPerPerson = numPeople > 0 ? bagTotal / numPeople : 0;
+                // 首先计算总毛付金额，用于计算每人的费用比例
+                let totalMealAndBoxCost = 0;
+                rows.forEach(row => {
+                    const mealCost = parseFloat(row.querySelector('.meal-cost').value) || 0;
+                    const boxFee = parseFloat(row.querySelector('.box-fee').value) || 0;
+                    totalMealAndBoxCost += (mealCost + boxFee);
+                });
                 
                 // Initialize totals
                 let totalGross = 0;
                 let totalBox = 0;
                 let totalDelivery = 0;
                 let totalDiscount = 0;
+                let totalPersonalDiscount = 0;
                 let totalBag = 0;
                 let totalNet = 0;
                 
@@ -1393,21 +2029,33 @@
                     const mealCost = parseFloat(row.querySelector('.meal-cost').value) || 0;
                     const boxFee = parseFloat(row.querySelector('.box-fee').value) || 0;
                     
+                    // 计算个人所占比例
+                    const personRatio = totalMealAndBoxCost > 0 ? (mealCost + boxFee) / totalMealAndBoxCost : 0;
+                    
+                    // 按比例分配费用
+                    const deliveryShare = deliveryTotal * personRatio;
+                    const discountShare = discountTotal * personRatio;
+                    const bagShare = bagTotal * personRatio;
+                    
+                    // 获取独享优惠
+                    const personalDiscount = parseFloat(row.querySelector('.personal-discount').value) || 0;
+                    
                     // Set calculated values
-                    row.querySelector('.delivery-fee').value = deliveryPerPerson.toFixed(2);
-                    row.querySelector('.discount').value = discountPerPerson.toFixed(2);
-                    row.querySelector('.bag-fee').value = bagPerPerson.toFixed(2);
+                    row.querySelector('.delivery-fee').value = deliveryShare.toFixed(2);
+                    row.querySelector('.discount').value = discountShare.toFixed(2);
+                    row.querySelector('.bag-fee').value = bagShare.toFixed(2);
                     
                     // Calculate row totals
-                    const gross = mealCost + boxFee + deliveryPerPerson;
-                    const net = gross - discountPerPerson + bagPerPerson;
+                    const gross = mealCost + boxFee + deliveryShare;
+                    const net = gross - discountShare - personalDiscount + bagShare;
                     
                     // Update totals
                     totalGross += gross;
                     totalBox += boxFee;
-                    totalDelivery += deliveryPerPerson;
-                    totalDiscount += discountPerPerson;
-                    totalBag += bagPerPerson;
+                    totalDelivery += deliveryShare;
+                    totalDiscount += discountShare;
+                    totalPersonalDiscount += personalDiscount;
+                    totalBag += bagShare;
                     totalNet += net;
                     
                     // Calculate percentage
@@ -1422,13 +2070,14 @@
                 table.querySelector('.total-box').textContent = totalBox.toFixed(2);
                 table.querySelector('.total-delivery').textContent = totalDelivery.toFixed(2);
                 table.querySelector('.total-discount').textContent = `(${totalDiscount.toFixed(2)})`;
+                table.querySelector('.total-personal-discount').textContent = `(${totalPersonalDiscount.toFixed(2)})`;
                 table.querySelector('.total-bag').textContent = totalBag.toFixed(2);
                 table.querySelector('.total-net').textContent = totalNet.toFixed(2);
                 
                 // If this is the active order, update summary section
                 if (parseInt(activeOrderId) === parseInt(orderId)) {
                     document.getElementById('summaryGross').textContent = totalGross.toFixed(2);
-                    document.getElementById('summaryDiscount').textContent = `(${totalDiscount.toFixed(2)})`;
+                    document.getElementById('summaryDiscount').textContent = `(${(totalDiscount + totalPersonalDiscount).toFixed(2)})`;
                     document.getElementById('summaryNet').textContent = totalNet.toFixed(2);
                     document.getElementById('summaryPeople').textContent = numPeople;
                     document.getElementById('summaryFood').textContent = (totalGross - totalBox - totalDelivery).toFixed(2);
@@ -1446,8 +2095,12 @@
                 
                 // Collect all person names and initialize data structure
                 for (let i = 1; i <= orderCounter; i++) {
+                    // 檢查該訂單是否存在
+                    if (!document.querySelector(`#mealTableBody${i}`)) continue;
+                    
                     const rows = document.querySelectorAll(`#mealTableBody${i} .item-row`);
-                rows.forEach(row => {
+                    
+                    rows.forEach(row => {
                         const name = row.querySelector('.person-name').value.trim();
                         if (name && !allPersons.has(name)) {
                             allPersons.set(name, {
@@ -1455,6 +2108,7 @@
                                 totalBox: 0,
                                 totalDelivery: 0,
                                 totalDiscount: 0,
+                                totalPersonalDiscount: 0,
                                 totalBag: 0,
                                 totalNet: 0,
                                 totalPercentage: 0
@@ -1465,6 +2119,9 @@
                 
                 // Collect amounts and details for each person from each order
                 for (let i = 1; i <= orderCounter; i++) {
+                    // 檢查該訂單是否存在
+                    if (!document.querySelector(`#mealTableBody${i}`)) continue;
+                    
                     const rows = document.querySelectorAll(`#mealTableBody${i} .item-row`);
                     
                     rows.forEach(row => {
@@ -1475,6 +2132,7 @@
                             const boxFee = parseFloat(row.querySelector('.box-fee').value) || 0;
                             const deliveryFee = parseFloat(row.querySelector('.delivery-fee').value) || 0;
                             const discount = parseFloat(row.querySelector('.discount').value) || 0;
+                            const personalDiscount = parseFloat(row.querySelector('.personal-discount').value) || 0;
                             const bagFee = parseFloat(row.querySelector('.bag-fee').value) || 0;
                             
                             const personData = allPersons.get(name);
@@ -1482,6 +2140,7 @@
                             personData.totalBox += boxFee;
                             personData.totalDelivery += deliveryFee;
                             personData.totalDiscount += discount;
+                            personData.totalPersonalDiscount += personalDiscount;
                             personData.totalBag += bagFee;
                             personData.totalNet += amount;
                             // 百分比计算基于总金额
@@ -1502,6 +2161,7 @@
                 let finalTotalBox = 0;
                 let finalTotalDelivery = 0;
                 let finalTotalDiscount = 0;
+                let finalTotalPersonalDiscount = 0;
                 let finalTotalBag = 0;
                 let finalTotalNet = 0;
                 
@@ -1516,6 +2176,7 @@
                         <td class="yellow-bg">${data.totalBox.toFixed(2)}</td>
                         <td class="yellow-bg">${data.totalDelivery.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalDiscount.toFixed(2)}</td>
+                        <td class="light-blue-bg">${data.totalPersonalDiscount.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalBag.toFixed(2)}</td>
                         <td class="orange-bg">${data.totalPercentage.toFixed(1)}%</td>
                         <td>${data.totalNet.toFixed(2)}</td>
@@ -1530,6 +2191,7 @@
                     finalTotalBox += data.totalBox;
                     finalTotalDelivery += data.totalDelivery;
                     finalTotalDiscount += data.totalDiscount;
+                    finalTotalPersonalDiscount += data.totalPersonalDiscount;
                     finalTotalBag += data.totalBag;
                     finalTotalNet += data.totalNet;
                     grandTotal += data.totalNet;
@@ -1542,6 +2204,7 @@
                 document.getElementById('finalTotalBox').textContent = finalTotalBox.toFixed(2);
                 document.getElementById('finalTotalDelivery').textContent = finalTotalDelivery.toFixed(2);
                 document.getElementById('finalTotalDiscount').textContent = finalTotalDiscount.toFixed(2);
+                document.getElementById('finalTotalPersonalDiscount').textContent = finalTotalPersonalDiscount.toFixed(2);
                 document.getElementById('finalTotalBag').textContent = finalTotalBag.toFixed(2);
                 document.getElementById('finalTotalPercentage').textContent = '100%';
                 document.getElementById('finalTotalNet').textContent = finalTotalNet.toFixed(2);
@@ -1553,6 +2216,9 @@
             function getTotalGrossAcrossAllOrders() {
                 let total = 0;
                 for (let i = 1; i <= orderCounter; i++) {
+                    // 检查订单是否存在
+                    if (!document.querySelector(`#mealTable${i}`)) continue;
+                    
                     const grossElement = document.querySelector(`#mealTable${i} .total-gross`);
                     if (grossElement) {
                         total += parseFloat(grossElement.textContent) || 0;
@@ -1599,6 +2265,7 @@
                     firstRow.querySelector('.box-fee').value = '0';
                     firstRow.querySelector('.delivery-fee').value = '0';
                     firstRow.querySelector('.discount').value = '0';
+                    firstRow.querySelector('.personal-discount').value = '0';
                     firstRow.querySelector('.bag-fee').value = '0';
                     
                     // Reset expense table
@@ -1620,6 +2287,11 @@
             function saveData() {
                 // In a real app, this would save to localStorage or server
                 alert('數據已保存！在實際應用中，這會將數據保存到瀏覽器或伺服器。');
+            }
+            
+            function loadData() {
+                // In a real app, this would load from localStorage or server
+                alert('載入數據！在實際應用中，這會從瀏覽器或伺服器加載保存的數據。');
             }
             
             function addSampleData() {
@@ -2037,7 +2709,7 @@
                 footer.style.textAlign = 'center';
                 footer.style.fontSize = '12px';
                 footer.style.color = '#888';
-                footer.textContent = `CJT體重增加費用分攤計算器 © ${new Date().getFullYear()}`;
+                footer.textContent = `CJT體重增加費用分攤計算器 By GaryLEI © ${new Date().getFullYear()}`;
                 styleContainer.appendChild(footer);
                 
                 pdfContent.appendChild(styleContainer);
@@ -2207,8 +2879,8 @@
                 <h3>刪除訂單</h3>
                 <p>您確定要刪除此訂單嗎？此操作無法恢復，且訂單中的所有數據都將丟失。</p>
                 <div class="buttons">
-                    <button class="cancel-btn">取消</button>
-                    <button class="confirm-btn">確定刪除</button>
+                    <button class="cancel-btn"><i class="fas fa-times"></i> 取消</button>
+                    <button class="confirm-btn"><i class="fas fa-trash-alt"></i> 確定刪除</button>
                 </div>
             `;
             document.body.appendChild(deleteOrderDialog);
@@ -2286,9 +2958,10 @@
                 // 5. 更新总结算表
                 updateFinalSummaryHeaders();
                 
-                // 6. 自动重新计算
-                calculateAll();
-                updateFinalSummary();
+                // 6. 清空已刪除訂單的記錄，避免總結算表中包含已刪除的數據
+                setTimeout(function() {
+                    updateFinalSummary();
+                }, 100);
                 
                 // 7. 关闭确认对话框和遮罩层
                 hideDeleteOrderConfirm();
@@ -2346,7 +3019,261 @@
                         delete rowCounters[oldOrderId];
                     }
                 }
+                
+                // 更新 rowCounters 对象中的 key，使其与新的订单ID匹配
+                const newRowCounters = {};
+                for (let i = 1; i <= orderCounter; i++) {
+                    newRowCounters[i] = rowCounters[i] || 1;
+                }
+                rowCounters = newRowCounters;
             }
+            
+            // 更新总结算表的表头，以反映当前的订单
+            function updateFinalSummaryHeaders() {
+                // 確保所有訂單的資料都重新計算並更新到總結算表
+                for (let i = 1; i <= orderCounter; i++) {
+                    // 檢查訂單是否存在
+                    if (document.querySelector(`#mealTable${i}`)) {
+                        calculateOrderById(i);
+                    }
+                }
+                
+                // 更新總結算表，確保刪除訂單後總結算表正確顯示
+                updateFinalSummary();
+            }
+            
+            // 常用飯友相關函數
+            
+            // 從 localStorage 加載常用飯友
+            function loadFrequentFriends() {
+                const savedFriends = localStorage.getItem('frequentFriends');
+                if (savedFriends) {
+                    try {
+                        frequentFriends = JSON.parse(savedFriends);
+                        updateFrequentFriendsUI();
+                    } catch (e) {
+                        console.error('加載常用飯友時出錯:', e);
+                        frequentFriends = [];
+                    }
+                } else {
+                    frequentFriends = [];
+                }
+            }
+            
+            // 保存常用飯友到 localStorage
+            function saveFrequentFriends() {
+                localStorage.setItem('frequentFriends', JSON.stringify(frequentFriends));
+            }
+            
+            // 更新常用飯友UI顯示
+            function updateFrequentFriendsUI() {
+                const friendChips = document.getElementById('friendChips');
+                friendChips.innerHTML = '';
+                
+                frequentFriends.forEach((friend, index) => {
+                    const chip = document.createElement('div');
+                    chip.className = 'friend-chip';
+                    chip.innerHTML = `
+                        <i class="fas fa-user"></i> ${friend}
+                        <span class="remove-friend" data-index="${index}">&times;</span>
+                    `;
+                    chip.dataset.name = friend;
+                    
+                    // 點擊飯友名稱添加到當前行
+                    chip.addEventListener('click', function(e) {
+                        if (!e.target.classList.contains('remove-friend')) {
+                            addFriendToRow(friend);
+                        }
+                    });
+                    
+                    friendChips.appendChild(chip);
+                });
+                
+                // 為刪除按鈕添加事件
+                document.querySelectorAll('.remove-friend').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 防止觸發父元素的點擊事件
+                        const index = parseInt(this.dataset.index);
+                        removeFrequentFriend(index);
+                    });
+                });
+                
+                // 更新管理對話框中的列表
+                updateFriendsTable();
+            }
+            
+            // 添加新的常用飯友
+            function addNewFrequentFriend() {
+                const nameInput = document.getElementById('newFriendName');
+                const name = nameInput.value.trim();
+                
+                if (name) {
+                    if (!frequentFriends.includes(name)) {
+                        frequentFriends.push(name);
+                        saveFrequentFriends();
+                        updateFrequentFriendsUI();
+                        nameInput.value = '';
+                    } else {
+                        alert('此飯友已存在!');
+                    }
+                }
+            }
+            
+            // 移除常用飯友
+            function removeFrequentFriend(index) {
+                if (index >= 0 && index < frequentFriends.length) {
+                    frequentFriends.splice(index, 1);
+                    saveFrequentFriends();
+                    updateFrequentFriendsUI();
+                }
+            }
+            
+            // 將飯友添加到當前選中的行
+            function addFriendToRow(friendName) {
+                // 查找當前激活的訂單
+                const activeOrder = document.querySelector(`.order-tab-content[data-order-id="${activeOrderId}"]`);
+                if (!activeOrder) return;
+                
+                // 嘗試查找一個空的人名輸入框
+                let emptyNameInput = Array.from(activeOrder.querySelectorAll('.person-name')).find(input => !input.value.trim());
+                
+                if (!emptyNameInput) {
+                    // 如果沒有空的輸入框，添加一個新行
+                    addNewRow(activeOrderId);
+                    // 重新獲取最後添加的行
+                    const rows = activeOrder.querySelectorAll('.item-row');
+                    emptyNameInput = rows[rows.length - 1].querySelector('.person-name');
+                }
+                
+                if (emptyNameInput) {
+                    emptyNameInput.value = friendName;
+                    // 觸發計算更新
+                    calculateOrderById(activeOrderId);
+                    updateFinalSummary();
+                }
+            }
+            
+            // 顯示飯友管理對話框
+            function showFriendsDialog() {
+                updateFriendsTable();
+                document.getElementById('friendsDialog').style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
+            }
+            
+            // 隱藏飯友管理對話框
+            function hideFriendsDialog() {
+                document.getElementById('friendsDialog').style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
+            }
+            
+            // 更新飯友管理表格
+            function updateFriendsTable() {
+                const tbody = document.getElementById('friendsTableBody');
+                tbody.innerHTML = '';
+                
+                frequentFriends.forEach((friend, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${friend}</td>
+                        <td>
+                            <button class="delete-friend-btn" data-index="${index}" style="color: #e74c3c; background: none; border: none; cursor: pointer; min-width: auto; padding: 5px; box-shadow: none;">
+                                <i class="fas fa-trash-alt"></i> 刪除
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // 為刪除按鈕添加事件
+                document.querySelectorAll('.delete-friend-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        removeFrequentFriend(index);
+                    });
+                });
+            }
+            
+            // 添加新訂單時，將常用飯友功能也加入新訂單
+            
+            // 設置新訂單的常用飯友功能
+            function setupFrequentFriendsFeature(orderId) {
+                // 更新訂單的常用飯友UI
+                updateOrderFrequentFriendsUI(orderId);
+                
+                // 添加事件監聽器
+                document.getElementById(`manageFriendsBtn${orderId}`).addEventListener('click', showFriendsDialog);
+                
+                document.getElementById(`addFriendBtn${orderId}`).addEventListener('click', function() {
+                    const nameInput = document.getElementById(`newFriendName${orderId}`);
+                    const name = nameInput.value.trim();
+                    
+                    if (name) {
+                        if (!frequentFriends.includes(name)) {
+                            frequentFriends.push(name);
+                            saveFrequentFriends();
+                            updateFrequentFriendsUI();
+                            nameInput.value = '';
+                        } else {
+                            alert('此飯友已存在!');
+                        }
+                    }
+                });
+                
+                document.getElementById(`newFriendName${orderId}`).addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        document.getElementById(`addFriendBtn${orderId}`).click();
+                    }
+                });
+            }
+            
+            // 更新指定訂單的常用飯友UI
+            function updateOrderFrequentFriendsUI(orderId) {
+                const friendChips = document.querySelector(`.friend-chips-${orderId}`);
+                if (!friendChips) return;
+                
+                friendChips.innerHTML = '';
+                
+                frequentFriends.forEach((friend) => {
+                    const chip = document.createElement('div');
+                    chip.className = 'friend-chip';
+                    chip.innerHTML = `<i class="fas fa-user"></i> ${friend}`;
+                    chip.dataset.name = friend;
+                    
+                    // 點擊飯友名稱添加到當前行
+                    chip.addEventListener('click', function() {
+                        if (orderId === activeOrderId) {
+                            addFriendToRow(friend);
+                        } else {
+                            // 如果點擊的不是當前活動的訂單，先切換到該訂單
+                            switchTab(orderId.toString());
+                            addFriendToRow(friend);
+                        }
+                    });
+                    
+                    friendChips.appendChild(chip);
+                });
+            }
+            
+            // 在每次常用飯友列表變更時，更新所有訂單的常用飯友UI
+            function updateAllOrdersFrequentFriendsUI() {
+                for (let i = 1; i <= orderCounter; i++) {
+                    updateOrderFrequentFriendsUI(i);
+                }
+            }
+            
+            // 修改updateFrequentFriendsUI函數，使其也更新所有訂單的常用飯友UI
+            const originalUpdateFrequentFriendsUI = updateFrequentFriendsUI;
+            updateFrequentFriendsUI = function() {
+                originalUpdateFrequentFriendsUI();
+                updateAllOrdersFrequentFriendsUI();
+            };
+            
+            // 設置第一個訂單的常用飯友功能
+            setupFrequentFriendsFeature(1);
+            
+            // 自動計算
+            calculateAll();
+            updateFinalSummary();
         });
     </script>
 </body>
