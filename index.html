@@ -945,14 +945,11 @@
             justify-content: center;
             font-size: 10px;
             cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.2s, transform 0.2s;
+            opacity: 1;
+            transition: transform 0.2s;
             z-index: 10;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        
-        .order-tab:hover .order-delete-btn {
-            opacity: 1;
+            border: none;
         }
         
         .order-delete-btn:hover {
@@ -2370,11 +2367,8 @@
                                 <tr class="expense-row">
                                     <td><i class="fas fa-tags"></i> 商家優惠</td>
                                     <td>
-                                        <input type="number" step="0.01" class="expense-amount merchant-discount" value="0">
-                                        <div class="merchant-discount-controls">
-                                            <button class="merchant-discount-btn discount-decrease"><i class="fas fa-minus"></i></button>
-                                            <button class="merchant-discount-btn discount-increase"><i class="fas fa-plus"></i></button>
-                                        </div>
+                                        <input type="number" step="0.5" class="expense-amount merchant-discount" value="0">
+                                       
                                     </td>
                                     <td>
                                         <input type="text" class="expense-note" value="由商家提供的折扣">
