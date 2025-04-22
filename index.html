@@ -494,10 +494,15 @@
         
         /* 不同订单的颜色样式 */
         .order-tab[data-order-id="1"] {
-            background: #3498db;
-            border-top: none;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
             position: relative;
+        }
+        
+        .order-tab[data-order-id="1"].active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            font-weight: bold;
         }
         
         .order-tab[data-order-id="2"] {
@@ -505,16 +510,6 @@
             border-top: none;
             color: white;
             position: relative;
-        }
-        
-        .order-tab[data-order-id="1"].active {
-            background: #3498db;
-            color: white;
-        }
-        
-        .order-tab[data-order-id="2"].active {
-            background: #9b59b6;
-            color: white;
         }
         
         .order-tab[data-order-id="3"] {
@@ -526,29 +521,49 @@
             color: #2ecc71;
         }
         
+        .order-tab[data-order-id="4"] {
+            background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
+        }
+        
+        .order-tab[data-order-id="4"].active {
+            background: white;
+            color: #2ecc71;
+        }
+        
+        .order-tab[data-order-id="5"] {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .order-tab[data-order-id="5"].active {
+            background: white;
+            color: #c0392b;
+        }
+        
         /* 添加新訂單按钮样式修复 */
         #addOrderTabBtn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            font-size: 20px;
+            width: 50px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            transition: all 0.3s;
+            min-width: 0;
             border: none;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: all 0.2s;
             overflow: hidden;
             flex-shrink: 0;
         }
         
         #addOrderTabBtn:hover {
             background: linear-gradient(135deg, #27ae60, #219651);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         #addOrderTabBtn:active {
@@ -713,6 +728,26 @@
             .meal-table td:nth-child(2) {
                 background-color: #f0f7ff;
             }
+            
+            /* 确保按钮在移动端有正确的形状 */
+            .bag-decrease,
+            .bag-increase,
+            .bag-decrease-modern,
+            .bag-increase-modern {
+                border-radius: 50% !important;
+                overflow: hidden;
+            }
+            
+            /* 确保添加按钮在移动端是圆角矩形 */
+            #addOrderTabBtn {
+                border-radius: 8px !important;
+            }
+            
+            /* 订单标签在移动端的样式修复 */
+            .order-tab {
+                border-radius: 10px 10px 0 0 !important;
+                overflow: hidden;
+            }
         }
         
         @media (max-width: 576px) {
@@ -743,6 +778,8 @@
             #addOrderTabBtn {
                 width: 40px;
                 height: 40px;
+                border-radius: 8px;
+                font-size: 18px;
             }
             
             .section-header {
@@ -933,28 +970,26 @@
         /* 添加删除订单按钮的样式 */
         .order-delete-btn {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 18px;
-            height: 18px;
-            background-color: #e74c3c;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            cursor: pointer;
-            opacity: 1;
-            transition: transform 0.2s;
-            z-index: 10;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: none;
             border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        
+        .order-tab:hover .order-delete-btn {
+            opacity: 1;
         }
         
         .order-delete-btn:hover {
-            transform: scale(1.1);
-            background-color: #c0392b;
+            color: white;
+            transform: translateY(-50%) scale(1.2);
         }
         
         /* 添加删除按钮的样式（用于页面顶部的紫色区域） */
@@ -1774,6 +1809,14 @@
             .meal-table td:nth-child(2) {
                 left: 35px;
             }
+            
+            /* 确保添加按钮在超小屏幕上也是圆角矩形 */
+            #addOrderTabBtn {
+                width: 35px;
+                height: 35px;
+                border-radius: 6px !important;
+                font-size: 16px;
+            }
         }
         
         /* 膠袋費區域完全重新設計 */
@@ -2205,8 +2248,7 @@
     <div class="container">
         <div class="toolbar">
             <div class="button-group">
-                <button id="clearAllBtn" style="position: relative;">
-                    <span class="delete-btn"><i class="fas fa-times"></i></span>
+                <button id="clearAllBtn">
                     <i class="fas fa-trash-alt"></i> 清除所有
                 </button>
                 <button id="exportPdfBtn"><i class="fas fa-file-pdf"></i> 輸出PDF</button>
@@ -2263,7 +2305,6 @@
         <div class="order-tabs" id="orderTabs">
             <div class="order-tab active" data-order-id="1">
                 <i class="fas fa-clipboard-list"></i> 訂單 1
-                <button class="order-delete-btn" data-order-id="1"><i class="fas fa-times"></i></button>
             </div>
             <button id="addOrderTabBtn"><i class="fas fa-plus"></i></button>
         </div>
@@ -2320,7 +2361,7 @@
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
                                     <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
-                                    <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
+                                    <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="" placeholder="個人優惠"></td>
                                     <td class="orange-bg percentage">0%</td>
                                     <td class="net-pay">0.00</td>
                                     <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
@@ -2678,11 +2719,25 @@
                 newTab.className = 'order-tab';
                 newTab.dataset.orderId = newOrderId;
                 
-                // Add delete button to the tab
-                newTab.innerHTML = `
-                    <i class="fas fa-clipboard-list"></i> 訂單 ${newOrderId}
-                    <button class="order-delete-btn" data-order-id="${newOrderId}"><i class="fas fa-times"></i></button>
-                `;
+                // 基本标签内容
+                newTab.innerHTML = `<i class="fas fa-clipboard-list"></i> 訂單 ${newOrderId}`;
+                
+                // 只为订单2及之后的订单添加删除按钮
+                if (newOrderId > 1) {
+                    const deleteBtn = document.createElement('span');
+                    deleteBtn.className = 'order-delete-btn';
+                    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                    deleteBtn.setAttribute('title', '刪除此訂單');
+                    deleteBtn.dataset.orderId = newOrderId;
+                    
+                    // 添加删除事件
+                    deleteBtn.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 阻止事件冒泡，防止触发标签切换
+                        showDeleteOrderConfirm(newOrderId);
+                    });
+                    
+                    newTab.appendChild(deleteBtn);
+                }
                 
                 // Insert before the + button
                 const addButton = document.getElementById('addOrderTabBtn');
@@ -2693,13 +2748,6 @@
                     if (!e.target.classList.contains('order-delete-btn')) {
                         switchTab(newOrderId.toString());
                     }
-                });
-                
-                // Setup delete button
-                const deleteBtn = newTab.querySelector('.order-delete-btn');
-                deleteBtn.addEventListener('click', function(e) {
-                    e.stopPropagation(); // Prevent triggering the tab click
-                    showDeleteOrderConfirm(newOrderId);
                 });
                 
                 // Create new tab content
@@ -2759,7 +2807,7 @@
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
-                                        <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
+                                        <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="" placeholder="個人優惠"></td>
                                         <td class="orange-bg percentage">0%</td>
                                         <td class="net-pay">0.00</td>
                                         <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
@@ -2849,18 +2897,18 @@
                 newRow.className = 'item-row';
                 newRow.dataset.rowId = newRowId;
                 
-                // Format row number with leading zero
-                const displayRowNum = newRowId < 10 ? `0${newRowId}` : newRowId;
+                const displayNumber = newRowId < 10 ? `0${newRowId}` : newRowId;
                 
+                // Create the HTML structure for the new row
                 newRow.innerHTML = `
-                    <td>${displayRowNum}</td>
-                    <td><input type="text" class="person-name" value=""></td>
-                    <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0"></td>
-                    <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
+                    <td>${displayNumber}</td>
+                    <td><input type="text" class="person-name" value="" placeholder="姓名"></td>
+                    <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0" placeholder="餐費"></td>
+                    <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0" placeholder="盒費"></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
                     <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
-                    <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="0" placeholder="個人優惠"></td>
+                    <td class="green-bg"><input type="number" step="0.01" class="personal-discount" value="" placeholder="個人優惠"></td>
                     <td class="orange-bg percentage">0%</td>
                     <td class="net-pay">0.00</td>
                     <td><span class="remove-btn"><i class="fas fa-trash-alt"></i></span></td>
@@ -3280,8 +3328,10 @@
                     const discountShare = discountTotal * personRatio;
                     const bagShare = bagTotal * personRatio;
                     
-                    // 获取独享优惠
-                    const personalDiscount = parseFloat(row.querySelector('.personal-discount').value) || 0;
+                    // 获取独享优惠 - 确保只有用户实际输入的值才被使用
+                    const personalDiscountInput = row.querySelector('.personal-discount');
+                    // 只有在用户明确输入了值时才使用它
+                    const personalDiscount = personalDiscountInput.value !== "" ? (parseFloat(personalDiscountInput.value) || 0) : 0;
                     
                     // Set calculated values
                     row.querySelector('.delivery-fee').value = deliveryShare.toFixed(2);
@@ -3316,6 +3366,9 @@
                 table.querySelector('.total-personal-discount').textContent = `(${totalPersonalDiscount.toFixed(2)})`;
                 table.querySelector('.total-bag').textContent = totalBag.toFixed(2);
                 table.querySelector('.total-net').textContent = totalNet.toFixed(2);
+                
+                // 更新总计行的比例为100%
+                table.querySelector('.total-percentage').textContent = "100.0%";
                 
                 // If this is the active order, update summary section
                 if (parseInt(activeOrderId) === parseInt(orderId)) {
@@ -3445,6 +3498,10 @@
                     const row = document.createElement('tr');
                     const displayIndex = index < 10 ? `0${index}` : index;
                     
+                    // 确保个人独享优惠正确显示
+                    // 如果用户未输入个人独享优惠，则显示0.00
+                    const personalDiscountValue = data.totalPersonalDiscount > 0 ? data.totalPersonalDiscount.toFixed(2) : "0.00";
+                    
                     let rowHTML = `
                         <td>${displayIndex}</td>
                         <td>${name}</td>
@@ -3452,7 +3509,7 @@
                         <td class="yellow-bg">${data.totalBox.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalDelivery.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalDiscount.toFixed(2)}</td>
-                        <td class="light-blue-bg">${data.totalPersonalDiscount.toFixed(2)}</td>
+                        <td class="light-blue-bg">${personalDiscountValue}</td>
                         <td class="light-blue-bg">${data.totalBag.toFixed(2)}</td>
                         <td class="orange-bg">${data.totalPercentage.toFixed(1)}%</td>
                         <td>${data.totalNet.toFixed(2)}</td>
@@ -3481,7 +3538,7 @@
                 document.getElementById('finalTotalBox').textContent = finalTotalBox.toFixed(2);
                 document.getElementById('finalTotalDelivery').textContent = finalTotalDelivery.toFixed(2);
                 document.getElementById('finalTotalDiscount').textContent = finalTotalDiscount.toFixed(2);
-                document.getElementById('finalTotalPersonalDiscount').textContent = finalTotalPersonalDiscount.toFixed(2);
+                document.getElementById('finalTotalPersonalDiscount').textContent = finalTotalPersonalDiscount > 0 ? finalTotalPersonalDiscount.toFixed(2) : "0.00";
                 document.getElementById('finalTotalBag').textContent = finalTotalBag.toFixed(2);
                 document.getElementById('finalTotalPercentage').textContent = '100%';
                 document.getElementById('finalTotalNet').textContent = finalTotalNet.toFixed(2);
@@ -3563,7 +3620,7 @@
                     firstRow.querySelector('.box-fee').value = '0';
                     firstRow.querySelector('.delivery-fee').value = '0';
                     firstRow.querySelector('.discount').value = '0';
-                    firstRow.querySelector('.personal-discount').value = '0';
+                    firstRow.querySelector('.personal-discount').value = '';
                     firstRow.querySelector('.bag-fee').value = '0';
                     
                     // Reset expense table
