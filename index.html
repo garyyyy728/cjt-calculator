@@ -328,22 +328,28 @@
         }
         
         .remove-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            color: white;
+            background-color: #e74c3c;
             width: 30px;
             height: 30px;
-            background-color: #e74c3c;
-            color: white;
             border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
+            transition: all 0.2s;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .remove-btn:hover {
             background-color: #c0392b;
             transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+        
+        .remove-btn i {
+            font-size: 14px;
         }
         
         .summary-section {
@@ -430,73 +436,123 @@
             margin-bottom: 35px;
         }
         
+        /* 订单标签样式优化 */
         .order-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            padding: 0 8px;
+            align-items: flex-end;
+            gap: 5px;
+            padding: 0 10px;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            z-index: 5;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
         
         .order-tab {
-            padding: 12px 24px;
-            background-color: #f2f6f9;
+            background: linear-gradient(135deg, #f0f3f6, #e7eaed);
+            padding: 10px 20px;
+            min-width: 150px;
+            text-align: center;
             border-radius: 10px 10px 0 0;
-            cursor: pointer;
-            font-weight: 500;
-            border: 1px solid #e5e9ef;
+            border: 1px solid #d0d7de;
             border-bottom: none;
-            transition: all 0.3s;
+            margin-right: 2px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
             position: relative;
-            color: #555;
+            overflow: hidden;
             display: flex;
             align-items: center;
-            gap: 8px;
-            min-width: 130px;
             justify-content: center;
-            font-size: 15px;
-        }
-        
-        .order-tab:hover {
-            background-color: #e5ecf2;
-            transform: translateY(-3px);
+            gap: 8px;
+            color: #555;
         }
         
         .order-tab.active {
-            background: linear-gradient(to bottom, var(--order1-color), var(--order1-color-dark));
-            color: white;
-            border-color: var(--order1-color);
-            transform: translateY(-3px);
-            padding-bottom: 15px;
+            background: white;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+            color: #3498db;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            z-index: 10;
+            position: relative;
+            z-index: 2;
+            padding-bottom: 13px;
+            margin-bottom: -1px;
         }
         
-        .order-tab.secondary.active {
-            background: linear-gradient(to bottom, var(--secondary-color), var(--secondary-color-dark));
-            border-color: var(--secondary-color);
+        .order-tab:hover:not(.active) {
+            background: linear-gradient(135deg, #e7eaed, #dde3e7);
+            transform: translateY(-2px);
         }
         
+        /* 订单标签中的图标样式 */
+        .order-tab i {
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        
+        /* 不同订单的颜色样式 */
+        .order-tab[data-order-id="1"] {
+            background: #3498db;
+            border-top: none;
+            color: white;
+            position: relative;
+        }
+        
+        .order-tab[data-order-id="2"] {
+            background: #9b59b6;
+            border-top: none;
+            color: white;
+            position: relative;
+        }
+        
+        .order-tab[data-order-id="1"].active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .order-tab[data-order-id="2"].active {
+            background: #9b59b6;
+            color: white;
+        }
+        
+        .order-tab[data-order-id="3"] {
+            background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
+        }
+        
+        .order-tab[data-order-id="3"].active {
+            background: white;
+            color: #2ecc71;
+        }
+        
+        /* 添加新訂單按钮样式修复 */
         #addOrderTabBtn {
-            width: 50px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
-            border-radius: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            transition: all 0.3s;
-            min-width: 0;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            overflow: hidden;
+            flex-shrink: 0;
         }
         
         #addOrderTabBtn:hover {
             background: linear-gradient(135deg, #27ae60, #219651);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        #addOrderTabBtn:active {
+            transform: scale(0.95);
         }
         
         .order-tab-content {
@@ -582,18 +638,80 @@
                 padding-bottom: 13px;
             }
             
+            /* 改进移动端表格显示 */
             .table-container {
-                padding: 10px 5px;
+                padding: 10px 0;
+                margin: 0 -10px;
+                width: calc(100% + 20px);
             }
             
-            th, td {
-                padding: 10px 5px;
-                font-size: 13px;
+            .meal-table {
+                width: 100%;
+                table-layout: fixed;
             }
             
-            input, select {
+            /* 调整移动端下的表格单元格和输入框 */
+            .meal-table th, 
+            .meal-table td {
                 padding: 8px 5px;
                 font-size: 13px;
+            }
+            
+            .meal-table input[type="text"],
+            .meal-table input[type="number"] {
+                padding: 5px;
+                font-size: 13px;
+            }
+            
+            /* 确保文本输入框在移动端对齐正确 */
+            .meal-table .net-pay, 
+            .meal-table .percentage {
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* 针对中小屏幕的表格优化 */
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .meal-table {
+                min-width: 750px; /* 确保表格有最小宽度 */
+            }
+            
+            /* 固定序号和飯友名列 */
+            .meal-table th:first-child,
+            .meal-table td:first-child,
+            .meal-table th:nth-child(2),
+            .meal-table td:nth-child(2) {
+                position: sticky;
+                background-color: #fff;
+                z-index: 2;
+            }
+            
+            .meal-table th:first-child,
+            .meal-table td:first-child {
+                left: 0;
+                z-index: 3;
+                border-right: 1px solid #dee2e6;
+                background-color: #f8f9fa;
+            }
+            
+            .meal-table th:nth-child(2),
+            .meal-table td:nth-child(2) {
+                left: 50px;
+                z-index: 2;
+                border-right: 2px solid #3498db;
+            }
+            
+            /* 高亮显示飯友名输入单元格 */
+            .meal-table td:nth-child(2) {
+                background-color: #f0f7ff;
             }
         }
         
@@ -630,6 +748,56 @@
             .section-header {
                 padding: 12px 15px;
                 font-size: 15px;
+            }
+            
+            /* 手机小屏幕下更加突出飯友名輸入框 */
+            .person-name {
+                min-width: 90px;
+                padding: 10px 6px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            
+            .meal-table th:nth-child(2), 
+            .meal-table td:nth-child(2) {
+                min-width: 100px;
+                z-index: 2;
+            }
+            
+            /* 横向滚动表格时保持序号和姓名列固定 */
+            .meal-table {
+                table-layout: fixed;
+            }
+            
+            .meal-table th:first-child,
+            .meal-table td:first-child,
+            .meal-table th:nth-child(2),
+            .meal-table td:nth-child(2) {
+                position: sticky;
+                background-color: #fff;
+                z-index: 5;
+            }
+            
+            .meal-table th:first-child,
+            .meal-table td:first-child {
+                left: 0;
+                z-index: 6;
+            }
+            
+            .meal-table th:nth-child(2),
+            .meal-table td:nth-child(2) {
+                left: 40px;
+            }
+            
+            /* 为固定列添加视觉提示 */
+            .meal-table td:nth-child(2)::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 4px;
+                background: linear-gradient(90deg, rgba(0,0,0,0.05), transparent);
             }
         }
         
@@ -788,6 +956,31 @@
         }
         
         .order-delete-btn:hover {
+            transform: scale(1.1);
+            background-color: #c0392b;
+        }
+        
+        /* 添加删除按钮的样式（用于页面顶部的紫色区域） */
+        .delete-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 18px;
+            height: 18px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .delete-btn:hover {
             transform: scale(1.1);
             background-color: #c0392b;
         }
@@ -1260,6 +1453,751 @@
             background: linear-gradient(135deg, #2980b9, #1f6aa5);
             transform: translateY(-2px);
         }
+        
+        /* 快速金額選項的樣式 */
+        .quick-amount-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .quick-amount {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            border: 1px solid #dfe6e9;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            min-width: 48px;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .quick-amount:hover {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+        }
+        
+        .quick-amount:active {
+            transform: translateY(0);
+            transition: all 0.1s;
+        }
+        
+        .quick-amount.active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-color: #2980b9;
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
+            transform: translateY(-1px);
+            position: relative;
+        }
+        
+        .quick-amount.active:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #3498db;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        }
+        
+        /* 膠袋費控制按鈕樣式 */
+        .bag-fee-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            padding: 3px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #dfe6e9;
+            max-width: 150px;
+            margin: 0 auto;
+            position: relative;
+            overflow: visible;
+        }
+        
+        .bag-btn {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            border: none;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #2c3e50;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+        
+        .bag-btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .bag-btn:hover:after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+        
+        .bag-btn:hover {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2);
+        }
+        
+        .bag-btn:active {
+            transform: scale(0.92);
+            box-shadow: 0 1px 2px rgba(52, 152, 219, 0.2);
+            background: linear-gradient(135deg, #2980b9, #216a9a);
+        }
+        
+        .bag-btn i {
+            transition: all 0.2s;
+        }
+        
+        .bag-btn:hover i {
+            transform: scale(1.2);
+        }
+        
+        .bag-decrease i {
+            position: relative;
+            left: -1px;
+        }
+        
+        .bag-increase i {
+            position: relative;
+            left: 1px;
+        }
+        
+        .bag-decrease {
+            border-radius: 20px 0 0 20px;
+        }
+        
+        .bag-increase {
+            border-radius: 0 20px 20px 0;
+        }
+        
+        .bag-fee-controls input {
+            width: 60px;
+            text-align: center;
+            border-radius: 0;
+            border: none;
+            border-left: 1px solid #ecf0f1;
+            border-right: 1px solid #ecf0f1;
+            height: 34px;
+            background: white;
+            font-weight: bold;
+            color: #2c3e50;
+            box-shadow: none;
+            margin: 0;
+            padding: 0 8px;
+        }
+        
+        .bag-fee-controls input:focus {
+            box-shadow: none;
+            background-color: white;
+        }
+        
+        /* 膠袋費提示樣式 */
+        .bag-fee-tooltip {
+            position: absolute;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            white-space: nowrap;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transform: translateY(5px);
+            pointer-events: none;
+        }
+        
+        .bag-fee-tooltip:before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #3498db;
+        }
+        
+        .bag-fee-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 移动端膠袋费控制按钮样式优化 */
+        @media (max-width: 768px) {
+            .bag-fee-controls {
+                max-width: 100%;
+                margin: 0 auto;
+                border-radius: 25px;
+                padding: 4px;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+                overflow: visible;
+            }
+            
+            .bag-btn {
+                width: 38px;
+                height: 38px;
+                border-radius: 50% !important;
+                font-size: 16px;
+                transition: all 0.2s;
+            }
+            
+            .bag-btn-modern {
+                width: 38px;
+                height: 38px;
+                border-radius: 50% !important;
+                font-size: 16px;
+            }
+            
+            .bag-fee-controls input {
+                height: 38px;
+                width: 55px;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 0;
+            }
+            
+            /* 提高点击区域的大小 */
+            .bag-btn::before,
+            .bag-btn-modern::before {
+                content: '';
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                right: -5px;
+                bottom: -5px;
+                z-index: -1;
+            }
+            
+            /* 确保按钮在移动端有正确的圆形形状 */
+            .bag-decrease,
+            .bag-increase,
+            .bag-decrease-modern,
+            .bag-increase-modern,
+            #addOrderTabBtn {
+                border-radius: 50% !important;
+                overflow: hidden;
+            }
+            
+            /* 订单标签在移动端的样式修复 */
+            .order-tab {
+                border-radius: 10px 10px 0 0 !important;
+                overflow: hidden;
+            }
+        }
+        
+        /* 移动端超小屏幕优化 */
+        @media (max-width: 400px) {
+            .table-container {
+                padding: 5px 2px;
+            }
+            
+            th, td {
+                padding: 8px 3px;
+                font-size: 12px;
+            }
+            
+            .person-name {
+                min-width: 85px;
+                width: 85px;
+                padding: 8px 4px;
+            }
+            
+            .meal-table th:nth-child(2), 
+            .meal-table td:nth-child(2) {
+                min-width: 90px;
+                width: 90px;
+            }
+            
+            input[type="number"] {
+                width: 100%;
+                min-width: 60px;
+            }
+            
+            .meal-table th:first-child,
+            .meal-table td:first-child {
+                min-width: 35px;
+                width: 35px;
+            }
+            
+            .meal-table th:nth-child(2),
+            .meal-table td:nth-child(2) {
+                left: 35px;
+            }
+        }
+        
+        /* 膠袋費區域完全重新設計 */
+        .expense-row.bag-fee-row {
+            background-color: #f8fcff;
+        }
+        
+        .expense-row.bag-fee-row td:nth-child(2) {
+            background-color: #f0f7ff;
+            padding: 15px;
+            position: relative;
+        }
+        
+        /* 膠袋費替代設計 - 更現代的控制器 */
+        .bag-fee-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .bag-fee-display {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: auto;
+            margin: 0 auto;
+        }
+        
+        .bag-fee-display i {
+            font-size: 14px;
+        }
+        
+        .bag-fee-display span {
+            min-width: 24px;
+            text-align: center;
+        }
+        
+        .bag-fee-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .bag-btn-modern {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: visible;
+        }
+        
+        .bag-btn-modern:hover {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .bag-btn-modern:active {
+            transform: scale(0.95);
+        }
+        
+        .bag-fee-label {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        /* 现代风格的胶袋费提示函数 */
+        .modern-tooltip {
+            position: absolute;
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+            pointer-events: none;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 添加小三角形 */
+        .modern-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(52, 152, 219, 0.9);
+        }
+        
+        /* 动画显示 */
+        .modern-tooltip.visible {
+            opacity: 1;
+            top: -50px;
+        }
+        
+        /* 表格基础样式增强 */
+        .meal-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .meal-table th, 
+        .meal-table td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .meal-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .meal-table input[type="text"],
+        .meal-table input[type="number"] {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+            background-color: #fff;
+        }
+        
+        /* 飯友名输入框增强 */
+        .person-name {
+            width: 100%;
+            min-width: 90px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #ffffff !important;
+            border: 2px solid #3498db !important;
+            border-radius: 8px !important;
+            padding: 8px 6px !important;
+            box-shadow: 0 0 0 1px rgba(52, 152, 219, 0.2);
+            text-align: center;
+        }
+        
+        .person-name:focus {
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+            background-color: #f0f8ff !important;
+            outline: none;
+        }
+        
+        /* 修复表格单元格宽度和排版 */
+        .meal-table th:first-child,
+        .meal-table td:first-child {
+            width: 50px;
+            min-width: 50px;
+        }
+        
+        .meal-table th:nth-child(2),
+        .meal-table td:nth-child(2) {
+            width: 120px;
+            min-width: 120px;
+        }
+        
+        .meal-table th:nth-child(3),
+        .meal-table th:nth-child(4),
+        .meal-table th:nth-child(5),
+        .meal-table th:nth-child(6),
+        .meal-table th:nth-child(7),
+        .meal-table th:nth-child(8),
+        .meal-table td:nth-child(3),
+        .meal-table td:nth-child(4),
+        .meal-table td:nth-child(5),
+        .meal-table td:nth-child(6),
+        .meal-table td:nth-child(7),
+        .meal-table td:nth-child(8) {
+            width: 80px;
+            min-width: 80px;
+        }
+        
+        .meal-table th:nth-child(9),
+        .meal-table td:nth-child(9) {
+            width: 60px;
+            min-width: 60px;
+        }
+        
+        .meal-table th:nth-child(10),
+        .meal-table td:nth-child(10) {
+            width: 80px;
+            min-width: 80px;
+        }
+        
+        .meal-table th:nth-child(11),
+        .meal-table td:nth-child(11) {
+            width: 50px;
+            min-width: 50px;
+        }
+        
+        /* 数字输入框样式增强 */
+        .meal-cost,
+        .box-fee,
+        .delivery-fee,
+        .discount,
+        .bag-fee,
+        .personal-discount {
+            text-align: center;
+            font-size: 14px;
+            width: 100%;
+            padding: 8px !important;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .meal-cost:focus,
+        .box-fee:focus,
+        .personal-discount:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        
+        .delivery-fee,
+        .discount,
+        .bag-fee {
+            background-color: #f9f9f9;
+            cursor: not-allowed;
+        }
+        
+        /* 确保数字列文本对齐 */
+        .net-pay, 
+        .percentage {
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .percentage {
+            color: #e67e22;
+        }
+        
+        .net-pay {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        /* 表格操作列样式 */
+        .meal-table th:last-child,
+        .meal-table td:last-child {
+            width: 50px;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        /* 胶袋费按钮样式修复 */
+        .bag-fee-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .bag-decrease-modern,
+        .bag-increase-modern {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: #f5f5f5;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .bag-decrease-modern {
+            background: #f0f3f7;
+        }
+        
+        .bag-increase-modern {
+            background: #3498db;
+            color: white;
+        }
+        
+        .bag-decrease-modern:hover,
+        .bag-increase-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .bag-decrease-modern:active,
+        .bag-increase-modern:active {
+            transform: scale(0.95);
+        }
+        
+        /* 胶袋费显示区域样式优化 */
+        .bag-fee-display {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: auto;
+            max-width: 120px;
+            margin: 0 auto;
+        }
+        
+        .bag-fee-container {
+            background-color: #f8fcff;
+            border-radius: 8px;
+            padding: 4px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* 商家優惠控制样式 */
+        .merchant-discount-controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        .merchant-discount-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+            color: #666;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .merchant-discount-btn:hover {
+            background: linear-gradient(to bottom, #e8f4ff, #d0e8ff);
+            color: #3498db;
+        }
+        
+        .merchant-discount-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 2px rgba(0,0,0,0.2);
+        }
+        
+        /* 商家優惠提示框 */
+        .merchant-discount-tooltip {
+            position: absolute;
+            background-color: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .merchant-discount-tooltip:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(52, 152, 219, 0.9) transparent transparent transparent;
+        }
+        
+        .merchant-discount-tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -1270,7 +2208,10 @@
     <div class="container">
         <div class="toolbar">
             <div class="button-group">
-                <button id="clearAllBtn"><i class="fas fa-trash-alt"></i> 清除所有</button>
+                <button id="clearAllBtn" style="position: relative;">
+                    <span class="delete-btn"><i class="fas fa-times"></i></span>
+                    <i class="fas fa-trash-alt"></i> 清除所有
+                </button>
                 <button id="exportPdfBtn"><i class="fas fa-file-pdf"></i> 輸出PDF</button>
             </div>
         </div>
@@ -1323,7 +2264,10 @@
         
         <!-- 订单选项卡 -->
         <div class="order-tabs" id="orderTabs">
-            <div class="order-tab active" data-order-id="1"><i class="fas fa-clipboard-list"></i> 訂單 1</div>
+            <div class="order-tab active" data-order-id="1">
+                <i class="fas fa-clipboard-list"></i> 訂單 1
+                <button class="order-delete-btn" data-order-id="1"><i class="fas fa-times"></i></button>
+            </div>
             <button id="addOrderTabBtn"><i class="fas fa-plus"></i></button>
         </div>
         
@@ -1370,7 +2314,7 @@
                                 </tr>
                             </thead>
                             <tbody class="meal-table-body" id="mealTableBody1">
-                                <!-- Default first row -->
+                                <!-- 初始行 -->
                                 <tr class="item-row" data-row-id="1">
                                     <td>01</td>
                                     <td><input type="text" class="person-name" value="" placeholder="姓名"></td>
@@ -1391,9 +2335,9 @@
                                     <td class="yellow-bg total-gross">0.00</td>
                                     <td class="yellow-bg total-box">0.00</td>
                                     <td class="light-blue-bg total-delivery">0.00</td>
-                                    <td class="light-blue-bg red-text total-discount">0.00</td>
+                                    <td class="light-blue-bg red-text total-discount">(0.00)</td>
                                     <td class="light-blue-bg total-bag">0.00</td>
-                                    <td class="green-bg red-text total-personal-discount">0.00</td>
+                                    <td class="green-bg red-text total-personal-discount">(0.00)</td>
                                     <td class="orange-bg total-percentage">0%</td>
                                     <td class="total-net">0.00</td>
                                     <td></td>
@@ -1415,7 +2359,6 @@
                                     <th width="30%">項目</th>
                                     <th width="20%">金額</th>
                                     <th width="30%">備註</th>
-                                    <th width="20%">操作</th>
                                 </tr>
                             </thead>
                             <tbody class="expense-table-body" id="expenseTableBody1">
@@ -1423,19 +2366,56 @@
                                     <td><i class="fas fa-truck"></i> 配送費</td>
                                     <td><input type="number" step="0.01" class="expense-amount delivery-fee-total" value="0"></td>
                                     <td><input type="text" class="expense-note" value="配送費用"></td>
-                                    <td></td>
                                 </tr>
                                 <tr class="expense-row">
                                     <td><i class="fas fa-tags"></i> 商家優惠</td>
-                                    <td><input type="number" step="0.01" class="expense-amount merchant-discount" value="0"></td>
-                                    <td><input type="text" class="expense-note" value="由商家提供的折扣"></td>
-                                    <td></td>
+                                    <td>
+                                        <input type="number" step="0.01" class="expense-amount merchant-discount" value="0">
+                                        <div class="merchant-discount-controls">
+                                            <button class="merchant-discount-btn discount-decrease"><i class="fas fa-minus"></i></button>
+                                            <button class="merchant-discount-btn discount-increase"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="expense-note" value="由商家提供的折扣">
+                                        <div class="quick-amount-options">
+                                            <button class="quick-amount" data-amount="1">1元</button>
+                                            <button class="quick-amount" data-amount="3">3元</button>
+                                            <button class="quick-amount" data-amount="5">5元</button>
+                                            <button class="quick-amount" data-amount="8">8元</button>
+                                            <button class="quick-amount" data-amount="10">10元</button>
+                                            <button class="quick-amount" data-amount="20">20元</button>
+                                            <button class="quick-amount" data-amount="30">30元</button>
+                                            <button class="quick-amount" data-amount="50">50元</button>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="expense-row">
+                                <tr class="expense-row bag-fee-row">
                                     <td><i class="fas fa-shopping-bag"></i> 膠袋費</td>
-                                    <td><input type="number" step="0.01" class="expense-amount bag-fee-total" value="0"></td>
-                                    <td><input type="text" class="expense-note" value="環保膠袋費用"></td>
-                                    <td></td>
+                                    <td>
+                                        <!-- 旧的控制器（保留但隐藏，用于保持数据一致性） -->
+                                        <div class="bag-fee-controls" style="display: none;">
+                                            <button class="bag-btn bag-decrease"><i class="fas fa-minus"></i></button>
+                                            <input type="number" step="1" class="expense-amount bag-fee-total" value="0" readonly>
+                                            <button class="bag-btn bag-increase"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        
+                                        <!-- 新的胶袋费控制器 -->
+                                        <div class="bag-fee-container">
+                                            <div class="bag-fee-display">
+                                                <i class="fas fa-shopping-bag"></i>
+                                                <span class="bag-fee-count">0</span>
+                                                <i class="fas fa-times"></i>
+                                                <span>1元</span>
+                                            </div>
+                                            <div class="bag-fee-buttons">
+                                                <button class="bag-btn-modern bag-decrease-modern"><i class="fas fa-minus"></i></button>
+                                                <button class="bag-btn-modern bag-increase-modern"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                            <div class="bag-fee-label">環保膠袋 (每個1元)</div>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="expense-note" value="環保膠袋費用 (每個1元)"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1447,22 +2427,23 @@
         <!-- 修改总结算表结构 -->
         <div class="calculator-section">
             <div class="section-header final-summary">總結算表</div>
-            <div class="table-container">
-                <table id="finalSummaryTable">
+            <div class="table-container final-summary-container">
+                <table class="meal-table" id="finalSummaryTable">
                     <thead>
                         <tr>
                             <th rowspan="2" width="5%">序號</th>
                             <th rowspan="2" width="10%">飯友</th>
                             <th colspan="8" class="order-group-header">每人消費明細</th>
                             <th rowspan="2" class="grand-total-column" width="8%">合計</th>
+                            <th rowspan="2" width="5%">操作</th>
                         </tr>
                         <tr>
                             <th class="yellow-bg" width="8%">毛付</th>
                             <th class="yellow-bg" width="8%">外賣盒</th>
                             <th class="light-blue-bg" width="8%">配送費</th>
                             <th class="light-blue-bg" width="8%">商家優惠</th>
+                            <th class="light-blue-bg" width="8%">獨享優惠</th>
                             <th class="light-blue-bg" width="8%">膠袋費</th>
-                            <th class="green-bg" width="8%">獨享優惠</th>
                             <th class="orange-bg" width="8%">比例</th>
                             <th width="8%">淨付</th>
                         </tr>
@@ -1473,15 +2454,16 @@
                     <tfoot>
                         <tr class="total-row">
                             <td colspan="2">總計</td>
-                            <td id="finalTotalGross" class="yellow-bg">0.00</td>
-                            <td id="finalTotalBox" class="yellow-bg">0.00</td>
-                            <td id="finalTotalDelivery" class="light-blue-bg">0.00</td>
-                            <td id="finalTotalDiscount" class="light-blue-bg">0.00</td>
-                            <td id="finalTotalBag" class="light-blue-bg">0.00</td>
-                            <td id="finalTotalPersonalDiscount" class="green-bg">0.00</td>
-                            <td id="finalTotalPercentage" class="orange-bg">0%</td>
+                            <td class="yellow-bg" id="finalTotalGross">0.00</td>
+                            <td class="yellow-bg" id="finalTotalBox">0.00</td>
+                            <td class="light-blue-bg" id="finalTotalDelivery">0.00</td>
+                            <td class="light-blue-bg" id="finalTotalDiscount">0.00</td>
+                            <td class="light-blue-bg" id="finalTotalPersonalDiscount">0.00</td>
+                            <td class="light-blue-bg" id="finalTotalBag">0.00</td>
+                            <td class="orange-bg" id="finalTotalPercentage">100%</td>
                             <td id="finalTotalNet">0.00</td>
-                            <td id="grandTotal" class="grand-total-column">0.00</td>
+                            <td class="grand-total-column" id="grandTotal">0.00</td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -1555,8 +2537,7 @@
             <table class="friends-table" id="friendsTable">
                 <thead>
                     <tr>
-                        <th width="70%">飯友名稱</th>
-                        <th width="30%">操作</th>
+                        <th width="100%">飯友名稱</th>
                     </tr>
                 </thead>
                 <tbody id="friendsTableBody">
@@ -1612,8 +2593,12 @@
             // Setup remove buttons
             setupRemoveButtons();
             
-            // Setup input change handlers for automatic calculation
+            // 设置输入处理程序
             setupInputHandlers();
+            
+            // 设置快速金额选项和胶袋费控制
+            setupQuickAmountOptions();
+            setupBagFeeControls();
             
             // Calculate initially
             calculateAll();
@@ -1673,75 +2658,64 @@
             }
             
             function switchTab(orderId) {
-                // Hide all tabs and contents
-                document.querySelectorAll('.order-tab').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                document.querySelectorAll('.order-tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
+                // Remove active class from all tabs and tab contents
+                document.querySelectorAll('.order-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.order-tab-content').forEach(content => content.classList.remove('active'));
                 
-                // Show selected tab and content
+                // Add active class to selected tab and tab content
                 document.querySelector(`.order-tab[data-order-id="${orderId}"]`).classList.add('active');
                 document.querySelector(`.order-tab-content[data-order-id="${orderId}"]`).classList.add('active');
                 
-                // Update active order
+                // Update active order ID
                 activeOrderId = orderId;
+                
+                // 更新摘要区域
+                updateSummarySection();
             }
             
             function addNewOrder() {
-                // 尋找最小未使用的訂單號
-                const existingTabs = document.querySelectorAll('.order-tab');
-                const usedOrderIds = Array.from(existingTabs)
-                    .filter(tab => tab.dataset.orderId) // 過濾掉沒有orderId的元素
-                    .map(tab => parseInt(tab.dataset.orderId));
+                orderCounter++;
+                rowCounters[orderCounter] = 1;
                 
-                // 從2開始找到第一個未使用的訂單號（訂單1永遠存在）
-                let newOrderId = 2;
-                while (usedOrderIds.includes(newOrderId)) {
-                    newOrderId++;
-                }
+                const newOrderId = orderCounter;
                 
-                // 更新訂單計數器，確保它至少等於最新的訂單ID
-                orderCounter = Math.max(newOrderId, orderCounter);
-                rowCounters[newOrderId] = 1;
-                
-                // Add new tab
-                const orderTabs = document.getElementById('orderTabs');
+                // Create new tab
                 const newTab = document.createElement('div');
                 newTab.className = 'order-tab';
                 newTab.dataset.orderId = newOrderId;
-                newTab.textContent = `訂單 ${newOrderId}`;
                 
-                // 添加删除按钮，但不为订单1添加
-                if (newOrderId > 1) {
-                    const deleteBtn = document.createElement('span');
-                    deleteBtn.className = 'order-delete-btn';
-                    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-                    deleteBtn.setAttribute('title', '刪除此訂單');
-                    deleteBtn.dataset.orderId = newOrderId;
-                    
-                    // 添加删除事件
-                    deleteBtn.addEventListener('click', function(e) {
-                        e.stopPropagation(); // 阻止事件冒泡，防止触发标签切换
-                        showDeleteOrderConfirm(newOrderId);
-                    });
-                    
-                    newTab.appendChild(deleteBtn);
-                }
+                // Add delete button to the tab
+                newTab.innerHTML = `
+                    <i class="fas fa-clipboard-list"></i> 訂單 ${newOrderId}
+                    <button class="order-delete-btn" data-order-id="${newOrderId}"><i class="fas fa-times"></i></button>
+                `;
                 
-                orderTabs.insertBefore(newTab, document.getElementById('addOrderTabBtn'));
+                // Insert before the + button
+                const addButton = document.getElementById('addOrderTabBtn');
+                addButton.parentNode.insertBefore(newTab, addButton);
                 
-                // Add new content
+                // Setup tab click handler
+                newTab.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('order-delete-btn')) {
+                        switchTab(newOrderId.toString());
+                    }
+                });
+                
+                // Setup delete button
+                const deleteBtn = newTab.querySelector('.order-delete-btn');
+                deleteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent triggering the tab click
+                    showDeleteOrderConfirm(newOrderId);
+                });
+                
+                // Create new tab content
                 const orderContents = document.getElementById('orderContents');
                 const newContent = document.createElement('div');
                 newContent.className = 'order-tab-content';
                 newContent.dataset.orderId = newOrderId;
-                
-                // Create content for the new order
-                // 不再使用 headerClass 来区分，让 CSS 基于 data-order-id 属性设置颜色
                 const headerClass = 'section-header';
                 
+                // Copy structure from the first order
                 newContent.innerHTML = `
                     <!-- 常用飯友區域 -->
                     <div class="frequent-friends">
@@ -1761,9 +2735,9 @@
                             <button id="addFriendBtn${newOrderId}"><i class="fas fa-plus"></i> 添加</button>
                         </div>
                     </div>
-
+                    
                     <div class="calculator-section">
-                        <div class="${headerClass}">餐點明細及分攤 - 訂單 ${newOrderId}</div>
+                        <div class="${headerClass}"><i class="fas fa-utensils"></i> 餐點明細及分攤 - 訂單 ${newOrderId}</div>
                         <div class="table-container">
                             <table class="meal-table" id="mealTable${newOrderId}">
                                 <thead>
@@ -1782,11 +2756,12 @@
                                     </tr>
                                 </thead>
                                 <tbody class="meal-table-body" id="mealTableBody${newOrderId}">
+                                    <!-- 初始行 -->
                                     <tr class="item-row" data-row-id="1">
                                         <td>01</td>
-                                        <td><input type="text" class="person-name" value=""></td>
-                                        <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0"></td>
-                                        <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0"></td>
+                                        <td><input type="text" class="person-name" value="" placeholder="姓名"></td>
+                                        <td class="yellow-bg"><input type="number" step="0.01" class="meal-cost" value="0" placeholder="餐費"></td>
+                                        <td class="yellow-bg"><input type="number" step="0.01" class="box-fee" value="0" placeholder="盒費"></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="delivery-fee" value="0" readonly></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="discount" value="0" readonly></td>
                                         <td class="light-blue-bg"><input type="number" step="0.01" class="bag-fee" value="0" readonly></td>
@@ -1802,9 +2777,9 @@
                                         <td class="yellow-bg total-gross">0.00</td>
                                         <td class="yellow-bg total-box">0.00</td>
                                         <td class="light-blue-bg total-delivery">0.00</td>
-                                        <td class="light-blue-bg red-text total-discount">0.00</td>
+                                        <td class="light-blue-bg red-text total-discount">(0.00)</td>
                                         <td class="light-blue-bg total-bag">0.00</td>
-                                        <td class="green-bg red-text total-personal-discount">0.00</td>
+                                        <td class="green-bg red-text total-personal-discount">(0.00)</td>
                                         <td class="orange-bg total-percentage">0%</td>
                                         <td class="total-net">0.00</td>
                                         <td></td>
@@ -1814,42 +2789,6 @@
                         </div>
                         <div class="add-row">
                             <button class="add-row-btn" data-order-id="${newOrderId}"><i class="fas fa-user-plus"></i> 新增一行</button>
-                        </div>
-                    </div>
-                    
-                    <div class="calculator-section">
-                        <div class="${headerClass}">其他支出明細 - 訂單 ${newOrderId}</div>
-                        <div class="table-container">
-                            <table class="expense-table" id="expenseTable${newOrderId}">
-                                <thead>
-                                    <tr>
-                                        <th width="30%">項目</th>
-                                        <th width="20%">金額</th>
-                                        <th width="30%">備註</th>
-                                        <th width="20%">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="expense-table-body" id="expenseTableBody${newOrderId}">
-                                    <tr class="expense-row">
-                                        <td>配送費</td>
-                                        <td><input type="number" step="0.01" class="expense-amount delivery-fee-total" value="0"></td>
-                                        <td><input type="text" class="expense-note" value="配送費用"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="expense-row">
-                                        <td>商家優惠</td>
-                                        <td><input type="number" step="0.01" class="expense-amount merchant-discount" value="0"></td>
-                                        <td><input type="text" class="expense-note" value="由商家提供的折扣"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="expense-row">
-                                        <td>膠袋費</td>
-                                        <td><input type="number" step="0.01" class="expense-amount bag-fee-total" value="0"></td>
-                                        <td><input type="text" class="expense-note" value="環保膠袋費用"></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 `;
@@ -1879,6 +2818,10 @@
                 // 自动計算
                 calculateAll();
                 updateFinalSummary();
+                
+                // 设置快速金额选项和胶袋费控制
+                setupQuickAmountOptions();
+                setupBagFeeControls();
             }
             
             function updateFinalSummaryHeaders() {
@@ -2017,6 +2960,279 @@
                         updateFinalSummary();
                     });
                 });
+                
+                // 重设快速金额选项和胶袋费控制
+                setupQuickAmountOptions();
+                setupBagFeeControls();
+            }
+            
+            // 设置快速金额选项的函数
+            function setupQuickAmountOptions() {
+                // 为每个快速金额选项组设置点击事件
+                document.querySelectorAll('.quick-amount-options').forEach(optionsGroup => {
+                    const merchantDiscountInput = optionsGroup.closest('tr').querySelector('.merchant-discount');
+                    const currentValue = parseFloat(merchantDiscountInput.value) || 0;
+                    
+                    // 找到与当前值匹配的按钮并标记为活跃
+                    optionsGroup.querySelectorAll('.quick-amount').forEach(btn => {
+                        // 移除所有活跃状态
+                        btn.classList.remove('active');
+                        
+                        // 检查是否与当前输入值匹配
+                        const btnAmount = parseFloat(btn.dataset.amount);
+                        if (btnAmount === currentValue) {
+                            btn.classList.add('active');
+                        }
+                        
+                        // 移除现有事件监听器
+                        const newBtn = btn.cloneNode(true);
+                        btn.parentNode.replaceChild(newBtn, btn);
+                        
+                        // 添加新事件监听器
+                        newBtn.addEventListener('click', function() {
+                            const amount = parseFloat(this.dataset.amount);
+                            
+                            // 移除所有按钮的活跃状态
+                            this.closest('.quick-amount-options').querySelectorAll('.quick-amount').forEach(b => {
+                                b.classList.remove('active');
+                            });
+                            
+                            // 添加当前按钮的活跃状态
+                            this.classList.add('active');
+                            
+                            // 更新输入框的值
+                            const input = this.closest('tr').querySelector('.merchant-discount');
+                            input.value = amount;
+                            
+                            // 触发计算
+                            const table = this.closest('table');
+                            const orderId = table.id.replace('expenseTable', '');
+                            calculateOrderById(orderId);
+                            updateFinalSummary();
+                        });
+                    });
+                });
+                
+                // 为商家优惠输入框添加事件监听器，当值改变时更新按钮的高亮状态
+                document.querySelectorAll('.merchant-discount').forEach(input => {
+                    // 克隆并替换以移除旧事件监听器
+                    const newInput = input.cloneNode(true);
+                    input.parentNode.replaceChild(newInput, input);
+                    
+                    // 添加新事件监听器
+                    newInput.addEventListener('input', function() {
+                        const currentValue = parseFloat(this.value) || 0;
+                        const optionsGroup = this.closest('tr').querySelector('.quick-amount-options');
+                        
+                        // 更新按钮高亮状态
+                        optionsGroup.querySelectorAll('.quick-amount').forEach(btn => {
+                            btn.classList.remove('active');
+                            
+                            const btnAmount = parseFloat(btn.dataset.amount);
+                            if (btnAmount === currentValue) {
+                                btn.classList.add('active');
+                            }
+                        });
+                        
+                        // 触发计算
+                        const table = this.closest('table');
+                        const orderId = table.id.replace('expenseTable', '');
+                        calculateOrderById(orderId);
+                        updateFinalSummary();
+                    });
+                });
+            }
+            
+            // 设置胶袋费加减按钮的函数
+            function setupBagFeeControls() {
+                // 设置新设计的减少按钮
+                document.querySelectorAll('.bag-decrease-modern').forEach(btn => {
+                    // 移除现有事件监听器
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    
+                    // 添加新事件监听器
+                    newBtn.addEventListener('click', function() {
+                        // 获取对应的隐藏输入框
+                        const container = this.closest('.bag-fee-container');
+                        const bagFeeControls = container.parentNode.querySelector('.bag-fee-controls');
+                        const input = bagFeeControls.querySelector('.bag-fee-total');
+                        const countDisplay = container.querySelector('.bag-fee-count');
+                        
+                        let value = parseInt(input.value) || 0;
+                        
+                        if (value > 0) {
+                            value--;
+                            // 更新隐藏输入框的值
+                            input.value = value;
+                            // 更新显示的计数
+                            countDisplay.textContent = value;
+                            
+                            // 加入动画效果
+                            this.classList.add('clicked');
+                            setTimeout(() => {
+                                this.classList.remove('clicked');
+                            }, 200);
+                            
+                            // 触发计算
+                            const table = this.closest('table');
+                            const orderId = table.id.replace('expenseTable', '');
+                            calculateOrderById(orderId);
+                            updateFinalSummary();
+                            
+                            // 显示提示信息
+                            showModernBagFeeTooltip(container, `减少 1 个膠袋 (-1元)`);
+                        }
+                    });
+                });
+                
+                // 设置新设计的增加按钮
+                document.querySelectorAll('.bag-increase-modern').forEach(btn => {
+                    // 移除现有事件监听器
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    
+                    // 添加新事件监听器
+                    newBtn.addEventListener('click', function() {
+                        // 获取对应的隐藏输入框
+                        const container = this.closest('.bag-fee-container');
+                        const bagFeeControls = container.parentNode.querySelector('.bag-fee-controls');
+                        const input = bagFeeControls.querySelector('.bag-fee-total');
+                        const countDisplay = container.querySelector('.bag-fee-count');
+                        
+                        let value = parseInt(input.value) || 0;
+                        
+                        value++;
+                        // 更新隐藏输入框的值
+                        input.value = value;
+                        // 更新显示的计数
+                        countDisplay.textContent = value;
+                        
+                        // 加入动画效果
+                        this.classList.add('clicked');
+                        setTimeout(() => {
+                            this.classList.remove('clicked');
+                        }, 200);
+                        
+                        // 触发计算
+                        const table = this.closest('table');
+                        const orderId = table.id.replace('expenseTable', '');
+                        calculateOrderById(orderId);
+                        updateFinalSummary();
+                        
+                        // 显示提示信息
+                        showModernBagFeeTooltip(container, `添加 1 個膠袋 (+1元)`);
+                    });
+                });
+                
+                // 保留旧的控制器事件处理（虽然不可见，但数据仍然需要保持一致性）
+                document.querySelectorAll('.bag-decrease').forEach(btn => {
+                    // 移除现有事件监听器
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    
+                    // 添加新事件监听器
+                    newBtn.addEventListener('click', function() {
+                        const input = this.parentNode.querySelector('.bag-fee-total');
+                        const row = this.closest('tr');
+                        const container = row.querySelector('.bag-fee-container');
+                        const countDisplay = container.querySelector('.bag-fee-count');
+                        
+                        let value = parseInt(input.value) || 0;
+                        
+                        if (value > 0) {
+                            value--;
+                            input.value = value;
+                            countDisplay.textContent = value;
+                            
+                            // 触发计算
+                            const table = this.closest('table');
+                            const orderId = table.id.replace('expenseTable', '');
+                            calculateOrderById(orderId);
+                            updateFinalSummary();
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.bag-increase').forEach(btn => {
+                    // 移除现有事件监听器
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    
+                    // 添加新事件监听器
+                    newBtn.addEventListener('click', function() {
+                        const input = this.parentNode.querySelector('.bag-fee-total');
+                        const row = this.closest('tr');
+                        const container = row.querySelector('.bag-fee-container');
+                        const countDisplay = container.querySelector('.bag-fee-count');
+                        
+                        let value = parseInt(input.value) || 0;
+                        
+                        value++;
+                        input.value = value;
+                        countDisplay.textContent = value;
+                        
+                        // 触发计算
+                        const table = this.closest('table');
+                        const orderId = table.id.replace('expenseTable', '');
+                        calculateOrderById(orderId);
+                        updateFinalSummary();
+                    });
+                });
+                
+                // 初始化计数显示
+                document.querySelectorAll('.bag-fee-total').forEach(input => {
+                    const row = input.closest('tr');
+                    const container = row.querySelector('.bag-fee-container');
+                    if (container) {
+                        const countDisplay = container.querySelector('.bag-fee-count');
+                        countDisplay.textContent = input.value;
+                    }
+                });
+            }
+            
+            // 现代风格的胶袋费提示函数
+            function showModernBagFeeTooltip(container, message) {
+                let tooltip = document.createElement('div');
+                tooltip.className = 'modern-tooltip';
+                tooltip.textContent = message;
+                tooltip.style.position = 'absolute';
+                tooltip.style.top = '-40px';
+                tooltip.style.left = '50%';
+                tooltip.style.transform = 'translateX(-50%)';
+                tooltip.style.background = 'rgba(52, 152, 219, 0.9)';
+                tooltip.style.color = 'white';
+                tooltip.style.padding = '8px 15px';
+                tooltip.style.borderRadius = '20px';
+                tooltip.style.fontSize = '14px';
+                tooltip.style.fontWeight = 'bold';
+                tooltip.style.boxShadow = '0 3px 10px rgba(0,0,0,0.1)';
+                tooltip.style.zIndex = '100';
+                tooltip.style.opacity = '0';
+                tooltip.style.transition = 'all 0.3s';
+                tooltip.style.whiteSpace = 'nowrap';
+                tooltip.style.pointerEvents = 'none';
+                
+                // 添加小三角形
+                tooltip.style.setProperty('--arrow-color', 'rgba(52, 152, 219, 0.9)');
+                tooltip.style.setProperty('--arrow-size', '8px');
+                
+                container.appendChild(tooltip);
+                
+                // 动画显示
+                setTimeout(() => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.top = '-50px';
+                }, 10);
+                
+                // 2秒后隐藏
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.top = '-40px';
+                    setTimeout(() => {
+                        tooltip.remove();
+                    }, 300);
+                }, 2000);
             }
             
             function calculateAll() {
@@ -2062,7 +3278,7 @@
                     const mealCost = parseFloat(row.querySelector('.meal-cost').value) || 0;
                     const boxFee = parseFloat(row.querySelector('.box-fee').value) || 0;
                     
-                    // 计算个人所占比例
+                    // 计算个人所占比例 - 使用餐费+外賣盒费计算比例
                     const personRatio = totalMealAndBoxCost > 0 ? (mealCost + boxFee) / totalMealAndBoxCost : 0;
                     
                     // 按比例分配费用
@@ -2079,8 +3295,8 @@
                     row.querySelector('.bag-fee').value = bagShare.toFixed(2);
                     
                     // Calculate row totals
-                    const gross = mealCost + boxFee + deliveryShare;
-                    const net = gross - discountShare - personalDiscount + bagShare;
+                    const gross = mealCost;
+                    const net = mealCost + boxFee + deliveryShare - discountShare - personalDiscount + bagShare;
                     
                     // Update totals
                     totalGross += gross;
@@ -2092,7 +3308,7 @@
                     totalNet += net;
                     
                     // Calculate percentage
-                    const percentage = totalGross > 0 ? (gross / totalGross * 100) : 0;
+                    const percentage = totalMealAndBoxCost > 0 ? ((mealCost + boxFee) / totalMealAndBoxCost * 100) : 0;
                     row.querySelector('.percentage').textContent = `${percentage.toFixed(1)}%`;
                     row.querySelector('.net-pay').textContent = net.toFixed(2);
                 });
@@ -2109,17 +3325,50 @@
                 
                 // If this is the active order, update summary section
                 if (parseInt(activeOrderId) === parseInt(orderId)) {
-                    document.getElementById('summaryGross').textContent = totalGross.toFixed(2);
-                    document.getElementById('summaryDiscount').textContent = `(${(totalDiscount + totalPersonalDiscount).toFixed(2)})`;
-                    document.getElementById('summaryNet').textContent = totalNet.toFixed(2);
-                    document.getElementById('summaryPeople').textContent = numPeople;
-                    document.getElementById('summaryFood').textContent = (totalGross - totalBox - totalDelivery).toFixed(2);
-                    document.getElementById('summaryBox').textContent = totalBox.toFixed(2);
-                    document.getElementById('summaryDelivery').textContent = totalDelivery.toFixed(2);
-                    document.getElementById('summaryBag').textContent = totalBag.toFixed(2);
+                    updateSummarySection();
                 }
                 
                 return totalNet;
+            }
+            
+            // 新增函数：更新摘要区域显示所有订单的总计
+            function updateSummarySection() {
+                // 计算所有订单的总计
+                let allOrdersTotalGross = 0;
+                let allOrdersTotalBox = 0;
+                let allOrdersTotalDelivery = 0;
+                let allOrdersTotalDiscount = 0;
+                let allOrdersTotalPersonalDiscount = 0;
+                let allOrdersTotalBag = 0;
+                let allOrdersTotalNet = 0;
+                let allOrdersTotalPeople = 0;
+                
+                for (let i = 1; i <= orderCounter; i++) {
+                    // 检查订单是否存在
+                    if (!document.querySelector(`#mealTable${i}`)) continue;
+                    
+                    const table = document.querySelector(`#mealTable${i}`);
+                    allOrdersTotalGross += parseFloat(table.querySelector('.total-gross').textContent) || 0;
+                    allOrdersTotalBox += parseFloat(table.querySelector('.total-box').textContent) || 0;
+                    allOrdersTotalDelivery += parseFloat(table.querySelector('.total-delivery').textContent) || 0;
+                    allOrdersTotalDiscount += parseFloat(table.querySelector('.total-discount').textContent.replace(/[()]/g, '')) || 0;
+                    allOrdersTotalPersonalDiscount += parseFloat(table.querySelector('.total-personal-discount').textContent.replace(/[()]/g, '')) || 0;
+                    allOrdersTotalBag += parseFloat(table.querySelector('.total-bag').textContent) || 0;
+                    allOrdersTotalNet += parseFloat(table.querySelector('.total-net').textContent) || 0;
+                    
+                    // 计算人数
+                    allOrdersTotalPeople += document.querySelectorAll(`#mealTableBody${i} .item-row`).length;
+                }
+                
+                // 更新摘要区域显示所有订单的总计
+                document.getElementById('summaryGross').textContent = allOrdersTotalGross.toFixed(2);
+                document.getElementById('summaryDiscount').textContent = `(${(allOrdersTotalDiscount + allOrdersTotalPersonalDiscount).toFixed(2)})`;
+                document.getElementById('summaryNet').textContent = allOrdersTotalNet.toFixed(2);
+                document.getElementById('summaryPeople').textContent = allOrdersTotalPeople;
+                document.getElementById('summaryFood').textContent = allOrdersTotalGross.toFixed(2);
+                document.getElementById('summaryBox').textContent = allOrdersTotalBox.toFixed(2);
+                document.getElementById('summaryDelivery').textContent = allOrdersTotalDelivery.toFixed(2);
+                document.getElementById('summaryBag').textContent = allOrdersTotalBag.toFixed(2);
             }
             
             function updateFinalSummary() {
@@ -2169,7 +3418,7 @@
                             const bagFee = parseFloat(row.querySelector('.bag-fee').value) || 0;
                             
                             const personData = allPersons.get(name);
-                            personData.totalGross += mealCost;
+                            personData.totalGross += mealCost; // 只将餐费计入总毛付金额
                             personData.totalBox += boxFee;
                             personData.totalDelivery += deliveryFee;
                             personData.totalDiscount += discount;
@@ -2211,9 +3460,10 @@
                         <td class="light-blue-bg">${data.totalDiscount.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalPersonalDiscount.toFixed(2)}</td>
                         <td class="light-blue-bg">${data.totalBag.toFixed(2)}</td>
-                        <td class="green-bg">${data.totalPercentage.toFixed(1)}%</td>
+                        <td class="orange-bg">${data.totalPercentage.toFixed(1)}%</td>
                         <td>${data.totalNet.toFixed(2)}</td>
                         <td class="grand-total-column">${data.totalNet.toFixed(2)}</td>
+                        <td><span class="remove-btn person-delete-btn" data-name="${name}"><i class="fas fa-trash-alt"></i></span></td>
                     `;
                     
                     row.innerHTML = rowHTML;
@@ -2247,6 +3497,9 @@
                 
                 // 更新总人数（所有订单中不重复的人数）
                 document.getElementById('summaryPeople').textContent = allPersons.size;
+                
+                // 同步更新摘要部分
+                updateSummarySection();
             }
             
             function getTotalNetAcrossAllOrders() {
@@ -3012,6 +4265,7 @@
                 // 6. 清空已刪除訂單的記錄，避免總結算表中包含已刪除的數據
                 setTimeout(function() {
                     updateFinalSummary();
+                    updateSummarySection(); // 更新摘要区域
                 }, 100);
                 
                 // 7. 关闭确认对话框和遮罩层
@@ -3104,11 +4358,19 @@
                         updateFrequentFriendsUI();
                     } catch (e) {
                         console.error('加載常用飯友時出錯:', e);
-                        frequentFriends = [];
+                        initDefaultFriendsList();
                     }
                 } else {
-                    frequentFriends = [];
+                    // 初始化默認飯友列表
+                    initDefaultFriendsList();
                 }
+            }
+            
+            // 初始化默認的飯友列表
+            function initDefaultFriendsList() {
+                frequentFriends = ['HOU', 'JULIA', 'KAREN', 'BAXTER', '擧', 'GRACE', 'KC', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                saveFrequentFriends();
+                updateFrequentFriendsUI();
             }
             
             // 保存常用飯友到 localStorage
@@ -3381,6 +4643,93 @@
             // 自動計算
             calculateAll();
             updateFinalSummary();
+
+            // 初始化膠袋费显示
+            document.querySelectorAll('.bag-fee-count').forEach((countDisplay, idx) => {
+                const order = parseInt(countDisplay.closest('[id^=expenseTable]').id.replace('expenseTable', '')) || 1;
+                const bagInput = document.querySelector(`#expenseTable${order} .bag-fee-total`);
+                if (bagInput) {
+                    countDisplay.textContent = bagInput.value || '0';
+                }
+            });
+
+            // 处理商家优惠调整按钮
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.discount-decrease')) {
+                    const button = e.target.closest('.discount-decrease');
+                    const container = button.closest('td');
+                    const input = container.querySelector('.merchant-discount');
+                    
+                    // 添加按钮点击动画效果
+                    button.classList.add('clicked');
+                    setTimeout(() => button.classList.remove('clicked'), 200);
+                    
+                    // 获取当前值并减少0.5
+                    let currentValue = parseFloat(input.value) || 0;
+                    currentValue = Math.max(0, currentValue - 0.5); // 确保不小于0
+                    input.value = currentValue.toFixed(2);
+                    
+                    // 触发计算
+                    const order = parseInt(container.closest('[id^=expenseTable]').id.replace('expenseTable', '')) || 1;
+                    calculateOrderById(order);
+                    updateFinalSummary();
+                    
+                    // 显示提示信息
+                    showMerchantDiscountTooltip(button, '減少商家優惠0.5元');
+                }
+                
+                if (e.target.closest('.discount-increase')) {
+                    const button = e.target.closest('.discount-increase');
+                    const container = button.closest('td');
+                    const input = container.querySelector('.merchant-discount');
+                    
+                    // 添加按钮点击动画效果
+                    button.classList.add('clicked');
+                    setTimeout(() => button.classList.remove('clicked'), 200);
+                    
+                    // 获取当前值并增加0.5
+                    let currentValue = parseFloat(input.value) || 0;
+                    currentValue += 0.5;
+                    input.value = currentValue.toFixed(2);
+                    
+                    // 触发计算
+                    const order = parseInt(container.closest('[id^=expenseTable]').id.replace('expenseTable', '')) || 1;
+                    calculateOrderById(order);
+                    updateFinalSummary();
+                    
+                    // 显示提示信息
+                    showMerchantDiscountTooltip(button, '增加商家優惠0.5元');
+                }
+            });
+            
+            // 显示商家优惠提示框
+            function showMerchantDiscountTooltip(button, message) {
+                // 移除已有提示框
+                const existingTooltips = document.querySelectorAll('.merchant-discount-tooltip');
+                existingTooltips.forEach(tip => tip.remove());
+                
+                // 创建新提示框
+                const tooltip = document.createElement('div');
+                tooltip.className = 'merchant-discount-tooltip';
+                tooltip.textContent = message;
+                
+                // 获取按钮位置并设置提示框位置
+                const buttonRect = button.getBoundingClientRect();
+                document.body.appendChild(tooltip);
+                
+                const tooltipRect = tooltip.getBoundingClientRect();
+                tooltip.style.left = `${buttonRect.left + buttonRect.width/2 - tooltipRect.width/2}px`;
+                tooltip.style.top = `${buttonRect.top - tooltipRect.height - 10}px`;
+                
+                // 显示提示框并设置自动隐藏
+                setTimeout(() => tooltip.classList.add('show'), 10);
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    setTimeout(() => tooltip.remove(), 300);
+                }, 2000);
+            }
+            
+            // Add event listeners to the initial bag buttons
         });
     </script>
 </body>
